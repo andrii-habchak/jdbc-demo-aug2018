@@ -1,7 +1,4 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class MainClass {
 
@@ -19,27 +16,38 @@ public class MainClass {
     }
 
     public static void main(String[] args) throws SQLException {
-        Product product = new Product("iPhone", 900.0, "This is iPhone");
 
-        String query = "INSERT INTO PRODUCTS (NAME, PRICE, DESCRIPTION) VALUES ('"
-                + product.getName() + "','"
-                + product.getPrice() + "','"
-                + product.getDescription() + "');";
+        String query = "SELECT * FROM PRODUCTS WHERE NAME = ?";
 
-        Statement statement = connection.createStatement();
-        statement.executeUpdate(query);
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1, "iPhone");
+        ResultSet resultSet = preparedStatement.executeQuery();
+        Product product = resultSet.next() ? getProduct(resultSet) : null;
 
+        System.out.println(product);
+    }
 
+    private static Product getProduct(ResultSet resultSet) throws SQLException {
+        return new Product(resultSet.getLong(1),
+                resultSet.getString(2),
+                resultSet.getDouble(3),
+                resultSet.getString(4));
     }
 
     static class Product {
-
         private Long id;
         private String name;
         private Double price;
         private String description;
 
         public Product() {
+        }
+
+        public Product(Long id, String name, Double price, String description) {
+            this.id = id;
+            this.name = name;
+            this.price = price;
+            this.description = description;
         }
 
         public Product(String name, Double price, String description) {
@@ -79,6 +87,16 @@ public class MainClass {
 
         public void setDescription(String description) {
             this.description = description;
+        }
+
+        @Override
+        public String toString() {
+            return "Product{" +
+                    "id=" + id +
+                    ", name='" + name + '\'' +
+                    ", price=" + price +
+                    ", description='" + description + '\'' +
+                    '}';
         }
     }
 
