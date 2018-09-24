@@ -5,6 +5,7 @@ public class Product {
     private String name;
     private Double price;
     private String description;
+    private Category category;
 
     public Product() {
     }
@@ -53,6 +54,14 @@ public class Product {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     @Override
