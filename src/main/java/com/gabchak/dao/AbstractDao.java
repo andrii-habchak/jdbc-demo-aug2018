@@ -1,15 +1,39 @@
 package com.gabchak.dao;
 
 import java.sql.Connection;
+import java.util.List;
 
-public class AbstractDao<T> {
+public abstract class AbstractDao<T, ID> implements GenericDao<T, ID> {
 
-    final Connection connection;
+    protected final Connection connection;
 
-    public AbstractDao(Connection connection) {
+    protected AbstractDao(Connection connection) {
         this.connection = connection;
     }
 
-    //TODO:CRUD
+    @Override
+    public T create(T t) {
+        return null;
+    }
 
+    @Override
+    public T read(ID id) {
+        return null;
+    }
+
+    @Override
+    public T update(T t) {
+        return null;
+    }
+
+    @Override
+    public void delete(ID id) {
+
+    }
+
+    @Override
+    public List<T> readAll() {
+        return null;
+    }
 }
+

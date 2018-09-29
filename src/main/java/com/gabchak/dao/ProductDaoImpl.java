@@ -8,7 +8,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductDaoImpl extends AbstractDao<Product> implements ProductDao {
+public class ProductDaoImpl extends AbstractDao<Product, Integer> implements ProductDao {
 
     public ProductDaoImpl(Connection connection) {
         super(connection);
