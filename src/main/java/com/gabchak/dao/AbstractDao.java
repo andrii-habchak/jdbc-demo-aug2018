@@ -15,10 +15,9 @@ public abstract class AbstractDao<T, ID> implements GenericDao<T, ID> {
     }
 
     abstract String createQuery();
-    abstract String readQuery();
-    abstract String readAllQuery();
     abstract String updateQuery();
     abstract String deleteQuery();
+    abstract String tableName();
     abstract T getObjectFromResultSet(ResultSet resultSet);
 
     @Override
@@ -35,11 +34,14 @@ public abstract class AbstractDao<T, ID> implements GenericDao<T, ID> {
 
     @Override
     public T read(ID id) {
+        String query = "SELECT * FROM ? WHERE ID = ?";
         ResultSet resultSet;
         PreparedStatement preparedStatement;
         T result = null;
         try {
-            preparedStatement = connection.prepareStatement(readAllQuery());
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, tableName());
+            preparedStatement.setObject(2, id);
             resultSet = preparedStatement.executeQuery();
             result = resultSet.next() ? getObjectFromResultSet(resultSet) : null;
         } catch (SQLException e) {
@@ -64,8 +66,14 @@ public abstract class AbstractDao<T, ID> implements GenericDao<T, ID> {
 
     @Override
     public void delete(ID id) {
-        String query;
-        //connection
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(deleteQuery());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
 
     }
 
