@@ -50,11 +50,16 @@ public abstract class AbstractDao<T, ID> implements GenericDao<T, ID> {
 
 
     @Override
-    public T update(T t) {
-        String query;
-        //connection
+    public int update(T t) {
+        int changedRows = 0;
 
-        return null;
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(updateQuery());
+            changedRows = preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return changedRows;
     }
 
     @Override
