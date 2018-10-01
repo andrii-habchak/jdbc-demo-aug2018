@@ -19,6 +19,8 @@ public class MainServlet extends HttpServlet {
 
     static {
         controllerMap.put(Requeast.of("GET", "/servlet/categories"), Factory.getAllCategoriesController());
+        controllerMap.put(Requeast.of("GET", "/servlet/login"), r -> ViewModel.of("login"));
+        controllerMap.put(Requeast.of("GET", "/servlet/register"), r -> ViewModel.of("register"));
     }
 
     @Override

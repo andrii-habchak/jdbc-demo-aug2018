@@ -6,7 +6,7 @@
 
     <servlet>
         <servlet-name>main</servlet-name>
-        <servlet-class>company.web.MainServlet</servlet-class>
+        <servlet-class>com.gabchak.web.MainServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>

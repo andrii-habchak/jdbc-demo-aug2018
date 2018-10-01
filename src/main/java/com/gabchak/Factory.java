@@ -2,7 +2,10 @@ package com.gabchak;
 
 import com.gabchak.controller.GetAllCategoriesController;
 import com.gabchak.controller.PageNotFoundController;
+import com.gabchak.controller.RegisterController;
 import com.gabchak.dao.CategoryDaoImpl;
+import com.gabchak.service.UserService;
+import com.gabchak.service.UserServiceImpl;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -37,5 +40,17 @@ public class Factory {
 
     public static PageNotFoundController getPageNotFoundController() {
         return new  PageNotFoundController();
+    }
+
+    public static UserService getUserService() {
+        return new UserServiceImpl(getUserDao());
+    }
+
+    public static RegisterController getRegisterController() {
+        return new RegisterController();
+    }
+
+    public static UserServiceImpl getUserServiceImpl() {
+        return new UserServiceImpl();
     }
 }
