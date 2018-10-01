@@ -14,21 +14,21 @@ public abstract class AbstractDao<T, ID> implements GenericDao<T, ID> {
         this.connection = connection;
     }
 
-    abstract String createQuery();
+    /*abstract String createQuery();
     abstract String updateQuery();
     abstract String deleteQuery();
     abstract String tableName();
-    abstract T getObjectFromResultSet(ResultSet resultSet);
+    abstract T getObjectFromResultSet(ResultSet resultSet);*/
 
     @Override
     public int create(T t) {
         int changedRows = 0;
-        try {
+        /*try {
             PreparedStatement preparedStatement = connection.prepareStatement(createQuery());
             changedRows = preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-        }
+        }*/
         return changedRows;
     }
 
@@ -38,7 +38,7 @@ public abstract class AbstractDao<T, ID> implements GenericDao<T, ID> {
         ResultSet resultSet;
         PreparedStatement preparedStatement;
         T result = null;
-        try {
+        /*try {
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, tableName());
             preparedStatement.setObject(2, id);
@@ -46,7 +46,7 @@ public abstract class AbstractDao<T, ID> implements GenericDao<T, ID> {
             result = resultSet.next() ? getObjectFromResultSet(resultSet) : null;
         } catch (SQLException e) {
             e.printStackTrace();
-        }
+        }*/
         return result;
     }
 
@@ -55,24 +55,24 @@ public abstract class AbstractDao<T, ID> implements GenericDao<T, ID> {
     public int update(T t) {
         int changedRows = 0;
 
-        try {
+        /*try {
             PreparedStatement preparedStatement = connection.prepareStatement(updateQuery());
             changedRows = preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-        }
+        }*/
         return changedRows;
     }
 
     @Override
     public void delete(ID id) {
 
-        try {
+        /*try {
             PreparedStatement preparedStatement = connection.prepareStatement(deleteQuery());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-        }
+        }*/
 
 
     }
