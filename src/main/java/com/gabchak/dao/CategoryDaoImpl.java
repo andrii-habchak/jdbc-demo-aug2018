@@ -7,7 +7,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoryDaoImpl extends AbstractDao<Category> implements CategoryDao {
+public class CategoryDaoImpl extends AbstractDao<Category, Integer> implements CategoryDao {
     public CategoryDaoImpl(Connection connection) {
         super(connection);
     }
