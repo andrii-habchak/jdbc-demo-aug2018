@@ -14,6 +14,10 @@ public class Category {
         this.products = products;
     }
 
+    public Category() {
+
+    }
+
     public Long getId() {
         return id;
     }
@@ -36,5 +40,14 @@ public class Category {
 
     public void setProducts(List<Product> products) {
         this.products = products;
+    }
+
+    @Override
+    public String toString() {
+        return "Category{" +
+                "ID=" + id +
+                ", name='" + name + '\'' +
+                ", products=" + products +
+                '}';
     }
 }
