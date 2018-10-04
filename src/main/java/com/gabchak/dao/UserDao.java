@@ -1,6 +1,5 @@
-package com.gabchak.service;
+package com.gabchak.dao;
 
-import com.gabchak.dao.AbstractDao;
 import com.gabchak.model.User;
 
 public interface UserDao {

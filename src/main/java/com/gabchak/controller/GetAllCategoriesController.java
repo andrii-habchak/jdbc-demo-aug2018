@@ -2,7 +2,7 @@ package com.gabchak.controller;
 
 import com.gabchak.dao.CategoryDao;
 import com.gabchak.model.Category;
-import com.gabchak.web.Requeast;
+import com.gabchak.web.Request;
 import com.gabchak.web.ViewModel;
 
 import java.util.List;
@@ -16,7 +16,7 @@ public class GetAllCategoriesController implements Controller{
     }
 
     @Override
-    public ViewModel process(Requeast requeast) {
+    public ViewModel process(Request request) {
         List<Category> categories = categoryDao.findAll();
         ViewModel vm = ViewModel.of("categories");
         vm.addAttribute("categories", categories);

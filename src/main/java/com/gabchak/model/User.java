@@ -8,6 +8,15 @@ public class User {
     private String lastName;
     private String token;
 
+    public User(Long id, String email, String password, String firstName, String lastName, String token) {
+        this.id = id;
+        this.email = email;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.token = token;
+    }
+
     public void setToken(String token) {
         this.token = token;
     }
@@ -18,6 +27,11 @@ public class User {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public User(String email, String password) {
+        this.email = email;
+        this.password = password;
     }
 
     public String getEmail() {
@@ -50,5 +64,9 @@ public class User {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getToken() {
+        return token;
     }
 }

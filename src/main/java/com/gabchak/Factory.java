@@ -4,6 +4,8 @@ import com.gabchak.controller.GetAllCategoriesController;
 import com.gabchak.controller.PageNotFoundController;
 import com.gabchak.controller.RegisterController;
 import com.gabchak.dao.CategoryDaoImpl;
+import com.gabchak.dao.UserDao;
+import com.gabchak.dao.UserDaoImpl;
 import com.gabchak.service.UserService;
 import com.gabchak.service.UserServiceImpl;
 
@@ -46,11 +48,15 @@ public class Factory {
         return new UserServiceImpl(getUserDao());
     }
 
+    private static UserDao getUserDao() {
+        return new UserDaoImpl(getConnection());
+    }
+
     public static RegisterController getRegisterController() {
-        return new RegisterController();
+        return new RegisterController(getUserService());
     }
 
     public static UserServiceImpl getUserServiceImpl() {
-        return new UserServiceImpl();
+        return new UserServiceImpl(getUserDao());
     }
 }
