@@ -49,6 +49,23 @@ public class UserDaoImpl implements UserDao {
         return user;
     }
 
+    @Override
+    public User findByToken(String token) {
+        String query = "SELECT ID, EMAIL, TOKEN, PASSWORD, FIRST_NAME, LAST_NAME FROM USERS WHERE TOKEN = ?";
+        PreparedStatement statement;
+        ResultSet resultSet = null;
+        User user = null;
+        try {
+            statement = connection.prepareStatement(query);
+            statement.setString(1, token);
+            resultSet = statement.executeQuery();
+            user = resultSet.next() ? getUser(resultSet) : null;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return user;
+    }
+
     private User getUser(ResultSet resultSet) throws SQLException {
         return new User(
                 resultSet.getLong(1),

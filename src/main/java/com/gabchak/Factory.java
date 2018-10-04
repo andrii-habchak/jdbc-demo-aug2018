@@ -48,7 +48,7 @@ public class Factory {
         return new UserServiceImpl(getUserDao());
     }
 
-    private static UserDao getUserDao() {
+    public static UserDao getUserDao() {
         return new UserDaoImpl(getConnection());
     }
 
