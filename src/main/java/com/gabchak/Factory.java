@@ -1,8 +1,6 @@
 package com.gabchak;
 
-import com.gabchak.controller.GetAllCategoriesController;
-import com.gabchak.controller.PageNotFoundController;
-import com.gabchak.controller.RegisterController;
+import com.gabchak.controller.*;
 import com.gabchak.dao.CategoryDaoImpl;
 import com.gabchak.dao.UserDao;
 import com.gabchak.dao.UserDaoImpl;
@@ -58,5 +56,13 @@ public class Factory {
 
     public static UserServiceImpl getUserServiceImpl() {
         return new UserServiceImpl(getUserDao());
+    }
+
+    public static Controller getLoginPageController() {
+        return new LoginController(getUserService());
+    }
+
+    public static Controller getGetCategoryByIdController() {
+        return new GetCategoryByIdController(getCategoryDaoImpl(getConnection()));
     }
 }
