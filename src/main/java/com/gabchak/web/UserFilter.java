@@ -35,7 +35,7 @@ public class UserFilter implements Filter {
         User user = null;
 
         if (!protectedUriSet.contains(request.getRequestURI())) {
-            processAuthorised(servletRequest, servletResponse, filterChain);
+            processAuthenticated(servletRequest, servletResponse, filterChain);
         }
 
         for (Cookie cookie : cookies) {
@@ -43,14 +43,14 @@ public class UserFilter implements Filter {
                 token = cookie.getValue();
             }
             if (token == null) {
-                processUnauthorised(servletRequest, servletResponse);
+                processUnauthenticated(servletRequest, servletResponse);
             } else {
                 user = userDao.findByToken(token);
                 if (user == null) {
-                    processUnauthorised(servletRequest, servletResponse);
+                    processUnauthenticated(servletRequest, servletResponse);
                 } else {
                     request.setAttribute("user_id", user.getId());
-                    processAuthorised(servletRequest, servletResponse, filterChain);
+                    processAuthenticated(servletRequest, servletResponse, filterChain);
                     filterChain.doFilter(servletRequest, servletResponse);
                 }
             }
@@ -58,11 +58,11 @@ public class UserFilter implements Filter {
 
     }
 
-    private void processAuthorised(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+    private void processAuthenticated(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         filterChain.doFilter(servletRequest, servletResponse);
     }
 
-    private void processUnauthorised(ServletRequest servletRequest, ServletResponse servletResponse) throws ServletException, IOException {
+    private void processUnauthenticated(ServletRequest servletRequest, ServletResponse servletResponse) throws ServletException, IOException {
         servletRequest.getRequestDispatcher("WEB-INF/views/login.jsp").forward(servletRequest, servletResponse);
     }
 
