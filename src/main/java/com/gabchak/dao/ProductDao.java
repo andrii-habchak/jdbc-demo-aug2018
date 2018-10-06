@@ -10,5 +10,7 @@ public interface ProductDao {
 
     Product findByName(String name);
 
+    Product findById(long id);
+
     List<Product> findAll();
 }

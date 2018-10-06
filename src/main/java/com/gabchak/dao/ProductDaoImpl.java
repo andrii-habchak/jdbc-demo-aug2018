@@ -47,6 +47,27 @@ public class ProductDaoImpl extends AbstractDao<Product, Integer> implements Pro
         return product;
     }
 
+    @Override
+    public Product findById(long id) {
+        String query = "SELECT P.ID, P.NAME, P.PRICE, P.DESCRIPTION" +
+                "FROM PRODUCTS P" +
+                "WHERE P.ID = ?";
+        PreparedStatement statement;
+        ResultSet resultSet;
+        Product result = new Product();
+
+        try {
+            statement = connection.prepareStatement(query);
+            statement.setLong(1, id);
+            resultSet = statement.executeQuery();
+            result = resultSet.next() ? getProductFromResultSet(resultSet) : null;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
     public List<Product> findAll() {
         String query = "SELECT ID, NAME, PRICE, DESCRIPTION FROM PRODUCTS";
         List<Product> result = new ArrayList<>();
