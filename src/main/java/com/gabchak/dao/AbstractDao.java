@@ -14,74 +14,45 @@ public abstract class AbstractDao<T, ID> implements GenericDao<T, ID> {
         this.connection = connection;
     }
 
-    /*abstract String createQuery();
-    abstract String updateQuery();
-    abstract String deleteQuery();
-    abstract String tableName();
-    abstract T getObjectFromResultSet(ResultSet resultSet);*/
 
     @Override
-    public int create(T t) {
-        int changedRows = 0;
-        /*try {
-            PreparedStatement preparedStatement = connection.prepareStatement(createQuery());
-            changedRows = preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }*/
-        return changedRows;
+    public void create(T t) {
+
     }
 
+    //create annotation for fields/methods
+    //use metadata for extract table name and column name
+    //rename method
     @Override
-    public T read(ID id) {
+    public T findById(ID id) {
         String query = "SELECT * FROM ? WHERE ID = ?";
-        ResultSet resultSet;
         PreparedStatement preparedStatement;
-        T result = null;
-        /*try {
+        T result;
+        try {
             preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, tableName());
-            preparedStatement.setObject(2, id);
-            resultSet = preparedStatement.executeQuery();
+            preparedStatement.setObject(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
             result = resultSet.next() ? getObjectFromResultSet(resultSet) : null;
         } catch (SQLException e) {
             e.printStackTrace();
-        }*/
-        return result;
+        }
+        return null;
     }
 
+    protected abstract T getObjectFromResultSet(ResultSet resultSet); //Need implementation
 
     @Override
     public int update(T t) {
-        int changedRows = 0;
-
-        /*try {
-            PreparedStatement preparedStatement = connection.prepareStatement(updateQuery());
-            changedRows = preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }*/
-        return changedRows;
+        return 0;
     }
 
     @Override
     public void delete(ID id) {
 
-        /*try {
-            PreparedStatement preparedStatement = connection.prepareStatement(deleteQuery());
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }*/
-
-
     }
 
     @Override
     public List<T> readAll() {
-        String query;
-        //connection
-
         return null;
     }
 }
