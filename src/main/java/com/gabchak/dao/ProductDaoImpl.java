@@ -93,21 +93,4 @@ public class ProductDaoImpl extends AbstractDao<Product, Integer> implements Pro
                 resultSet.getDouble(3),
                 resultSet.getString(4));
     }
-
-    public static void main(String[] args) {
-        //ProductDaoImpl dao = new ProductDaoImpl(Factory.getConnection());
-        //Product product1 = new Product("SAMSUNG", 699.0, "SAMSUNG PHONE");
-        //Product product2 = new Product("IMac", 4699.0, "Expensive environment");
-        //Product product3 = new Product("Shoes", 25.0, "Brown shoes");
-
-        //dao.save(product1);
-        //dao.save(product2);
-        //dao.save(product3);
-
-        //List<Product> result = dao.findAll();
-        CategoryDaoImpl categoryDao = new CategoryDaoImpl(Factory.getConnection());
-        Category category = categoryDao.findById(1L);
-        System.out.println(category);
-
-    }
 }

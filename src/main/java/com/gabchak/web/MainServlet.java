@@ -22,9 +22,10 @@ public class MainServlet extends HttpServlet {
         controllerMap.put(Request.of("GET", "/servlet/category"), Factory.getGetCategoryByIdController());
         controllerMap.put(Request.of("GET", "/servlet/login"), r -> ViewModel.of("login"));
         controllerMap.put(Request.of("GET", "/servlet/register"), r -> ViewModel.of("register"));
+        controllerMap.put(Request.of("POST", "/servlet/register"), Factory.getRegisterController());
         controllerMap.put(Request.of("GET", "/servlet/home"), r -> ViewModel.of("home"));
         controllerMap.put(Request.of("POST", "/servlet/login"), Factory.getLoginPageController());
-        controllerMap.put(Request.of("POST", "/servlet/register"), Factory.getRegisterController());
+        controllerMap.put(Request.of("GET", "/servlet/product"), Factory.getProductByIdController());
     }
 
     @Override

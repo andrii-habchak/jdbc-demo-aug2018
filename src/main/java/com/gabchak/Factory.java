@@ -1,9 +1,7 @@
 package com.gabchak;
 
 import com.gabchak.controller.*;
-import com.gabchak.dao.CategoryDaoImpl;
-import com.gabchak.dao.UserDao;
-import com.gabchak.dao.UserDaoImpl;
+import com.gabchak.dao.*;
 import com.gabchak.service.UserService;
 import com.gabchak.service.UserServiceImpl;
 
@@ -64,5 +62,13 @@ public class Factory {
 
     public static Controller getGetCategoryByIdController() {
         return new GetCategoryByIdController(getCategoryDaoImpl(getConnection()));
+    }
+
+    public static Controller getProductByIdController() {
+        return new GetProductControllerById(getProductDao());
+    }
+
+    private static ProductDaoImpl getProductDao() {
+        return new ProductDaoImpl(connection);
     }
 }
