@@ -20,6 +20,6 @@ public class RegisterController implements Controller {
         User user = new User(email, password);
         ViewModel vm = ViewModel.of("welcome");
         vm.addAttribute("user", userService.addUser(user));
-        return null;
+        return vm;
     }
 }
