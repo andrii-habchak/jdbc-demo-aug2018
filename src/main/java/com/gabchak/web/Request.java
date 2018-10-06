@@ -20,6 +20,10 @@ public class Request {
         return new Request(method, uri, null);
     }
 
+    public static Request of(String method, String uri, Map<String, String[]> params)  {
+        return new Request(method, uri, params);
+    }
+
     public String getMethod() {
         return method;
     }

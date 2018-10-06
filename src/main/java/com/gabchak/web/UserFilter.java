@@ -36,6 +36,7 @@ public class UserFilter implements Filter {
 
         if (!protectedUriSet.contains(request.getRequestURI())) {
             processAuthenticated(servletRequest, servletResponse, filterChain);
+            return;
         }
 
         for (Cookie cookie : cookies) {

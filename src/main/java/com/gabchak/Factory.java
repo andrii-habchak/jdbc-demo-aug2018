@@ -16,7 +16,7 @@ public class Factory {
     static {
         try {
             Class.forName("org.h2.Driver");
-            connection = DriverManager.getConnection("jdbc:h2:tcp://localhost/~/test", "sa", "");
+            connection = DriverManager.getConnection("jdbc:h2:tcp://localhost/~/java-aug-18", "sa", "");
         }catch (ClassNotFoundException e) {
             e.printStackTrace();
         }catch (SQLException e) {

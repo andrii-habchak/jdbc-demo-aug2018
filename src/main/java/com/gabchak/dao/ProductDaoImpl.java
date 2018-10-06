@@ -1,7 +1,5 @@
 package com.gabchak.dao;
 
-import com.gabchak.Factory;
-import com.gabchak.model.Category;
 import com.gabchak.model.Product;
 
 import java.sql.*;
@@ -49,8 +47,8 @@ public class ProductDaoImpl extends AbstractDao<Product, Integer> implements Pro
 
     @Override
     public Product findById(long id) {
-        String query = "SELECT P.ID, P.NAME, P.PRICE, P.DESCRIPTION" +
-                "FROM PRODUCTS P" +
+        String query = "SELECT P.ID, P.NAME, P.PRICE, P.DESCRIPTION " +
+                "FROM PRODUCTS P " +
                 "WHERE P.ID = ?";
         PreparedStatement statement;
         ResultSet resultSet;

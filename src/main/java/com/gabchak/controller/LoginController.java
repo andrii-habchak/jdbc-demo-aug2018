@@ -34,8 +34,7 @@ public class LoginController implements Controller {
 
     private ViewModel processAuthorised(User user) {
         ViewModel vm = ViewModel.of("home");
-        User registerUser = userService.addUser(user);
-        Cookie cookie = new Cookie("MATE", registerUser.getToken());
+        Cookie cookie = new Cookie("MATE", user.getToken());
         vm.setCookie(cookie);
         vm.addAttribute("user", user);
         return vm;

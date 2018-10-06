@@ -9,10 +9,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Product</title>
+    <title>Product ${product.name}</title>
 </head>
 <body>
-    <h1>${product.name}</h1>
+    <h1>${product.name} id = ${product.id}</h1>
     <p>
         ${product.description}
     </p>

@@ -17,7 +17,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User addUser(User user) {
-        String query = "INSERT TO USERS (EMAIL, TOKEN, PASSWORD, FIRST_NAME, LAST_NAME)";
+        String query = "INSERT INTO USERS (EMAIL, TOKEN, PASSWORD, FIRST_NAME, LAST_NAME) VALUES (?, ?, ?, ?, ?)";
         PreparedStatement preparedStatement;
         try {
             preparedStatement = connection.prepareStatement(query);
@@ -26,8 +26,9 @@ public class UserDaoImpl implements UserDao {
             preparedStatement.setString(3, user.getPassword());
             preparedStatement.setString(4, user.getFirstName());
             preparedStatement.setString(5, user.getLastName());
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException("User was not added");
+            throw new RuntimeException(e.getMessage());
         }
         return user;
     }
@@ -36,7 +37,7 @@ public class UserDaoImpl implements UserDao {
     public User findByEmail(String email) {
         String query = "SELECT ID, EMAIL, TOKEN, PASSWORD, FIRST_NAME, LAST_NAME FROM USERS WHERE EMAIL = ?";
         PreparedStatement statement;
-        ResultSet resultSet = null;
+        ResultSet resultSet;
         User user = null;
         try {
             statement = connection.prepareStatement(query);
@@ -53,7 +54,7 @@ public class UserDaoImpl implements UserDao {
     public User findByToken(String token) {
         String query = "SELECT ID, EMAIL, TOKEN, PASSWORD, FIRST_NAME, LAST_NAME FROM USERS WHERE TOKEN = ?";
         PreparedStatement statement;
-        ResultSet resultSet = null;
+        ResultSet resultSet;
         User user = null;
         try {
             statement = connection.prepareStatement(query);
@@ -68,12 +69,12 @@ public class UserDaoImpl implements UserDao {
 
     private User getUser(ResultSet resultSet) throws SQLException {
         return new User(
-                resultSet.getLong(1),
-                resultSet.getString(2),
-                resultSet.getString(3),
-                resultSet.getString(4),
-                resultSet.getString(5),
-                resultSet.getString(6)
+                resultSet.getLong("ID"),
+                resultSet.getString("EMAIL"),
+                resultSet.getString("PASSWORD"),
+                resultSet.getString("FIRST_NAME"),
+                resultSet.getString("LAST_NAME"),
+                resultSet.getString("TOKEN")
         );
     }
 }

@@ -1,15 +1,16 @@
 package com.gabchak.controller;
 
 import com.gabchak.dao.ProductDao;
+import com.gabchak.dao.ProductDaoImpl;
 import com.gabchak.model.Product;
 import com.gabchak.web.Request;
 import com.gabchak.web.ViewModel;
 
 public class GetProductControllerById implements Controller {
 
-    private final ProductDao productDao;
+    private final ProductDaoImpl productDao;
 
-    public GetProductControllerById(ProductDao productDao) {
+    public GetProductControllerById(ProductDaoImpl productDao) {
         this.productDao = productDao;
     }
 

@@ -39,7 +39,7 @@ public class MainServlet extends HttpServlet {
     }
 
     private void process(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-        Request request = Request.of(req.getMethod(), req.getRequestURI());
+        Request request = Request.of(req.getMethod(), req.getRequestURI(), req.getParameterMap());
 
         Controller controller = controllerMap.getOrDefault(request, getPageNotFoundController());
 
