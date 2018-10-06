@@ -18,10 +18,13 @@ public class MainServlet extends HttpServlet {
     private final static Map<Request, Controller> controllerMap = new HashMap<>();
 
     static {
-        controllerMap.put(Request.of("GET", "/servlet/home"), r -> ViewModel.of("home"));
         controllerMap.put(Request.of("GET", "/servlet/categories"), Factory.getAllCategoriesController());
-        controllerMap.put(Request.of("POST", "/servlet/login"), r -> ViewModel.of("login"));
-        controllerMap.put(Request.of("POST", "/servlet/register"), r -> ViewModel.of("register"));
+        controllerMap.put(Request.of("GET", "/servlet/category"), Factory.getGetCategoryByIdController());
+        controllerMap.put(Request.of("GET", "/servlet/login"), r -> ViewModel.of("login"));
+        controllerMap.put(Request.of("GET", "/servlet/register"), r -> ViewModel.of("register"));
+        controllerMap.put(Request.of("GET", "/servlet/home"), r -> ViewModel.of("home"));
+        controllerMap.put(Request.of("POST", "/servlet/login"), Factory.getLoginPageController());
+        controllerMap.put(Request.of("POST", "/servlet/register"), Factory.getRegisterController());
     }
 
     @Override
