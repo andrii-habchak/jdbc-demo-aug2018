@@ -18,7 +18,7 @@ public class UserFilter implements Filter {
     private String COOKIE_NAME = "MATE";
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig) {
         userDao = Factory.getUserDao();
         protectedUriSet.add("servlet/categories");
         protectedUriSet.add("servlet/category");
