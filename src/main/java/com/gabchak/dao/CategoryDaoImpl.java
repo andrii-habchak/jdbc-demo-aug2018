@@ -11,8 +11,8 @@ public class CategoryDaoImpl implements CategoryDao {
 
     protected final Connection connection;
 
-    public CategoryDaoImpl(Connection connection, Connection connection1) {
-        this.connection = connection1;
+    public CategoryDaoImpl(Connection connection) {
+        this.connection = connection;
     }
 
     @Override

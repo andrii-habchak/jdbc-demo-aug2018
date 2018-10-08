@@ -2,15 +2,16 @@ package com.gabchak.model;
 
 public class Role {
 
-    private String roleName;
+    private RoleName roleName;
     private User user;
 
-    public String getRoleName() {
-        return roleName;
+
+    public Role(RoleName roleName) {
+        this.roleName = roleName;
     }
 
-    public void setRoleName(String roleName) {
-        this.roleName = roleName;
+    public enum RoleName {
+        USER, ADMIN
     }
 
     public User getUser() {
@@ -19,5 +20,13 @@ public class Role {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public RoleName getRoleName() {
+        return roleName;
+    }
+
+    public static Role of(RoleName roleName) {
+        return new Role(roleName);
     }
 }
