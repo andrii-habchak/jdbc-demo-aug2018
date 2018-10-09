@@ -1,5 +1,5 @@
 <%@include file="header.jsp" %>
 
-    <h1>Please confirm your email</h1>
+    <h1>Admin Page</h1>
 </body>
 </html>

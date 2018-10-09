@@ -2,10 +2,8 @@ package com.gabchak.dao;
 
 import com.gabchak.model.User;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import static com.gabchak.model.Role.RoleName.USER;
 
 public class UserDaoImpl implements UserDao {
 
@@ -17,18 +15,42 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User addUser(User user) {
-        String query = "INSERT INTO USERS (EMAIL, TOKEN, PASSWORD, FIRST_NAME, LAST_NAME) VALUES (?, ?, ?, ?, ?)";
-        PreparedStatement preparedStatement;
+        String userQuery = "INSERT INTO USERS (EMAIL, TOKEN, PASSWORD, FIRST_NAME, LAST_NAME) VALUES (?, ?, ?, ?, ?)";
+        String roleQuery = "INSERT INTO USER_TO_ROLE (FK_USER_ID, FK_ROLE_ID) VALUES (?, ?)";
+        PreparedStatement userStatement;
+        PreparedStatement roleStatement;
+
         try {
-            preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, user.getEmail());
-            preparedStatement.setString(2, user.getToken());
-            preparedStatement.setString(3, user.getPassword());
-            preparedStatement.setString(4, user.getFirstName());
-            preparedStatement.setString(5, user.getLastName());
-            preparedStatement.executeUpdate();
+            connection.setAutoCommit(false);
+            userStatement = connection.prepareStatement(userQuery, Statement.RETURN_GENERATED_KEYS);
+            userStatement.setString(1, user.getEmail());
+            userStatement.setString(2, user.getToken());
+            userStatement.setString(3, user.getPassword());
+            userStatement.setString(4, user.getFirstName());
+            userStatement.setString(5, user.getLastName());
+            userStatement.executeUpdate();
+
+            ResultSet resultSet = userStatement.getGeneratedKeys();
+            long userId = 0;
+            if (resultSet.next()) {
+                userId = resultSet.getLong(1);
+            } else {
+                connection.rollback();
+            }
+
+            roleStatement = connection.prepareStatement(roleQuery);
+            roleStatement.setLong(1, userId);
+            roleStatement.setString(2, USER.toString());
+            roleStatement.executeUpdate();
+
+            connection.commit();
         } catch (SQLException e) {
-            throw new RuntimeException(e.getMessage());
+            try {
+                connection.rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+                throw new RuntimeException(e.getMessage());
+            }
         }
         return user;
     }

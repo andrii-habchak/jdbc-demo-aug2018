@@ -6,10 +6,12 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductDaoImpl extends AbstractDao<Product, Integer> implements ProductDao {
+public class ProductDaoImpl implements ProductDao {
+
+    protected final Connection connection;
 
     public ProductDaoImpl(Connection connection) {
-        super(connection);
+        this.connection = connection;
     }
 
     public void save(Product product) {

@@ -1,11 +1,14 @@
 package com.gabchak.service;
 
 import com.gabchak.dao.UserDao;
+import com.gabchak.model.Role;
 import com.gabchak.model.User;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.UUID;
+
+import static com.gabchak.model.Role.RoleName.USER;
 
 public class UserServiceImpl implements UserService {
     private final UserDao userDao;
@@ -20,7 +23,12 @@ public class UserServiceImpl implements UserService {
         String hashedPassword = hashPassword(user.getPassword());
         user.setPassword(hashedPassword);
         user.setToken(getToken());
+//        user.addRole(getDefaultRole());
         return userDao.addUser(user);
+    }
+
+    private Role getDefaultRole() {
+        return Role.of(USER);
     }
 
     @Override
