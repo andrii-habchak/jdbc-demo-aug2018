@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService {
     }
 
     private Role getDefaultRole() {
-        return Role.of(USER);
+        return Role.of(USER.toString());
     }
 
     @Override

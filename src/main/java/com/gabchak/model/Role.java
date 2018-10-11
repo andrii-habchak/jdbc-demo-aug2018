@@ -26,7 +26,7 @@ public class Role {
         return roleName;
     }
 
-    public static Role of(RoleName roleName) {
-        return new Role(roleName);
+    public static Role of(String roleName) {
+        return new Role(RoleName.valueOf(roleName));
     }
 }

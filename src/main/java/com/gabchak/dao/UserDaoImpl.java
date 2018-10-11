@@ -1,5 +1,6 @@
 package com.gabchak.dao;
 
+import com.gabchak.model.Role;
 import com.gabchak.model.User;
 
 import java.sql.*;
@@ -56,14 +57,27 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    public User findByToken(String token) {
+        String query = "SELECT U.ID, U.EMAIL, U.TOKEN, U.PASSWORD, U.FIRST_NAME, U.LAST_NAME, R.NAME FROM USERS " +
+                "JOIN USER_TO_ROLE UTR ON U.ID = UTR.FK_USER_ID " +
+                "JOIN ROLES R ON UTR.FK_ROLE_ID = R.NAME " +
+                "WHERE U.TOKEN = ?";
+        return getUser(query, token);
+    }
+
+    @Override
     public User findByEmail(String email) {
         String query = "SELECT ID, EMAIL, TOKEN, PASSWORD, FIRST_NAME, LAST_NAME FROM USERS WHERE EMAIL = ?";
+        return getUser(query, email);
+    }
+
+    private User getUser(String query, String param) {
         PreparedStatement statement;
         ResultSet resultSet;
         User user = null;
         try {
             statement = connection.prepareStatement(query);
-            statement.setString(1, email);
+            statement.setString(1, param);
             resultSet = statement.executeQuery();
             user = resultSet.next() ? getUser(resultSet) : null;
         } catch (SQLException e) {
@@ -72,21 +86,22 @@ public class UserDaoImpl implements UserDao {
         return user;
     }
 
-    @Override
-    public User findByToken(String token) {
-        String query = "SELECT ID, EMAIL, TOKEN, PASSWORD, FIRST_NAME, LAST_NAME FROM USERS WHERE TOKEN = ?";
-        PreparedStatement statement;
-        ResultSet resultSet;
-        User user = null;
-        try {
-            statement = connection.prepareStatement(query);
-            statement.setString(1, token);
-            resultSet = statement.executeQuery();
-            user = resultSet.next() ? getUser(resultSet) : null;
-        } catch (SQLException e) {
-            e.printStackTrace();
+    private User getUserWithRole(ResultSet resultSet) throws SQLException {
+        User user = new User(
+                resultSet.getLong("ID"),
+                resultSet.getString("EMAIL"),
+                resultSet.getString("PASSWORD"),
+                resultSet.getString("FIRST_NAME"),
+                resultSet.getString("LAST_NAME"),
+                resultSet.getString("TOKEN")
+        );
+
+        while (!resultSet.isAfterLast()) {
+            Role role = Role.of(resultSet.getString(7));
+            user.addRole(role);
+            resultSet.next();
         }
-        return user;
+        return null;
     }
 
     private User getUser(ResultSet resultSet) throws SQLException {
