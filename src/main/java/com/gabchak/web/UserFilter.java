@@ -58,7 +58,7 @@ public class UserFilter implements Filter {
                     processUnauthenticated(servletRequest, servletResponse);
                 } else {
                     if (verifyRole(user, roleName)) {
-                        request.setAttribute("user_id", user.getId());
+                        request.setAttribute("user", user);
                         processAuthenticated(servletRequest, servletResponse, filterChain);
                     } else {
                         processAccessDenied(servletRequest, servletResponse, filterChain);

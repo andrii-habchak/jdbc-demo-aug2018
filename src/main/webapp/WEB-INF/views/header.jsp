@@ -145,7 +145,8 @@
         </ul>
         <c:choose>
             <c:when test="${user != null}">
-                <div style="color:white" class="mr-5">Hello ${user.firstName}</div>
+                <div style="color:white" class="mr-3">Hello ${user.firstName}</div>
+                <a class="form-inline my-2 my-lg-0 btn btn-outline-primary mr-3" href="<c:url value="/servlet/logout"/>">Logout</a>
             </c:when>
             <c:otherwise>
                 <a class="form-inline my-2 my-lg-0 btn btn-outline-primary mr-3" href="<c:url value="/servlet/register"/>">Sign up</a>
