@@ -24,8 +24,10 @@ public class MainServlet extends HttpServlet {
         controllerMap.put(Request.of("GET", "/servlet/register"), r -> ViewModel.of("register"));
         controllerMap.put(Request.of("POST", "/servlet/register"), Factory.getRegisterController());
         controllerMap.put(Request.of("GET", "/servlet/home"), r -> ViewModel.of("home"));
+        controllerMap.put(Request.of("GET", "/servlet/admin"), r -> ViewModel.of("adminPage"));
         controllerMap.put(Request.of("POST", "/servlet/login"), Factory.getLoginPageController());
         controllerMap.put(Request.of("GET", "/servlet/product"), Factory.getProductByIdController());
+        controllerMap.put(Request.of("GET", "/servlet/logout"), Factory.getLogoutController());
     }
 
     @Override
@@ -39,7 +41,7 @@ public class MainServlet extends HttpServlet {
     }
 
     private void process(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-        Request request = Request.of(req.getMethod(), req.getRequestURI(), req.getParameterMap());
+        Request request = Request.of(req.getMethod(), req.getRequestURI(), req.getParameterMap(), req.getCookies());
 
         Controller controller = controllerMap.getOrDefault(request, getPageNotFoundController());
 
@@ -58,12 +60,6 @@ public class MainServlet extends HttpServlet {
     private void addCookie(ViewModel vm, HttpServletResponse resp) {
         if (vm.getCookie() != null) {
             resp.addCookie(vm.getCookie());
-        }
-    }
-
-    private void setCookie(ViewModel vm, HttpServletResponse response) {
-        if (vm.getCookie() != null) {
-            response.addCookie(vm.getCookie());
         }
     }
 }

@@ -23,12 +23,12 @@ public class UserServiceImpl implements UserService {
         String hashedPassword = hashPassword(user.getPassword());
         user.setPassword(hashedPassword);
         user.setToken(getToken());
-//        user.addRole(getDefaultRole());
+        user.addRole(getDefaultRole());
         return userDao.addUser(user);
     }
 
     private Role getDefaultRole() {
-        return Role.of(USER);
+        return Role.of(USER.toString());
     }
 
     @Override

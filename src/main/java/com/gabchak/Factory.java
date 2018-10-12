@@ -71,4 +71,8 @@ public class Factory {
     private static ProductDaoImpl getProductDao() {
         return new ProductDaoImpl(connection);
     }
+
+    public static Controller getLogoutController() {
+        return new LogoutController();
+    }
 }
