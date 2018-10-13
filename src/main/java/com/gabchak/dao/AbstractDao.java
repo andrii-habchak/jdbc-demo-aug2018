@@ -17,15 +17,6 @@ public abstract class AbstractDao<T, ID> implements GenericDao<T, ID> {
         this.connection = connection;
     }
 
-
-    @Override
-    public void insert(T t) {
-
-    }
-
-    //insert annotation for fields/methods
-    //use metadata for extract table name and column name
-    //rename method
     @Override
     public T findById(ID id) {
         String query = queryBulder.getSelectByIdQuery(connection.getClass());
@@ -41,16 +32,40 @@ public abstract class AbstractDao<T, ID> implements GenericDao<T, ID> {
         }
         return result;
     }
-
-    protected abstract T getObjectFromResultSet(ResultSet resultSet); //Need implementation
-
     @Override
     public int update(T t) {
-        return 0;
+        String query = queryBulder.getInsertQuery(connection.getClass());
+        PreparedStatement preparedStatement;
+        int result = 0;
+
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement = prepareStatementForUpdate(preparedStatement, t);
+
+            result = preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return result;
     }
 
     @Override
     public void deleteById(ID id) {
+        String query = queryBulder.getDeleteByIdQuery(connection.getClass());
+        PreparedStatement preparedStatement;
+
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setObject(1, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void insert(T t) {
 
     }
 
@@ -59,6 +74,8 @@ public abstract class AbstractDao<T, ID> implements GenericDao<T, ID> {
         return null;
     }
 
-    abstract String createQuery(); //Собираем поля в query
+    protected abstract T getObjectFromResultSet(ResultSet resultSet);
+
+    protected abstract PreparedStatement prepareStatementForUpdate(PreparedStatement preparedStatement, T t);
 }
 
