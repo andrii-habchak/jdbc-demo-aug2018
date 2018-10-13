@@ -4,9 +4,9 @@ import java.util.List;
 
 public interface GenericDao<T, ID> {
 
-    public void insert(T t);
-    public T findById(ID id);
-    public int update(T t);
-    public void deleteById(ID id);
-    public List<T> findAll();
+    void insert(T t);
+    T findById(ID id);
+    void update(T t);
+    void deleteById(ID id);
+    List<T> findAll();
 }

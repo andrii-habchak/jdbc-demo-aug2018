@@ -10,7 +10,7 @@ import java.util.List;
 
 public abstract class AbstractDao<T, ID> implements GenericDao<T, ID> {
 
-    protected final Connection connection;
+    private final Connection connection;
     private QueryBulder queryBulder = new QueryBulder();
 
     protected AbstractDao(Connection connection) {
@@ -33,7 +33,7 @@ public abstract class AbstractDao<T, ID> implements GenericDao<T, ID> {
         return result;
     }
     @Override
-    public int update(T t) {
+    public void update(T t) {
         String query = queryBulder.getInsertQuery(connection.getClass());
         PreparedStatement preparedStatement;
         int result = 0;
@@ -42,12 +42,10 @@ public abstract class AbstractDao<T, ID> implements GenericDao<T, ID> {
             preparedStatement = connection.prepareStatement(query);
             preparedStatement = prepareStatementForUpdate(preparedStatement, t);
 
-            result = preparedStatement.executeUpdate();
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        return result;
     }
 
     @Override
@@ -66,6 +64,16 @@ public abstract class AbstractDao<T, ID> implements GenericDao<T, ID> {
 
     @Override
     public void insert(T t) {
+        String query = queryBulder.getInsertQuery(connection.getClass());
+        PreparedStatement preparedStatement;
+
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement = prepareStatementForInsert(preparedStatement, t);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -77,5 +85,7 @@ public abstract class AbstractDao<T, ID> implements GenericDao<T, ID> {
     protected abstract T getObjectFromResultSet(ResultSet resultSet);
 
     protected abstract PreparedStatement prepareStatementForUpdate(PreparedStatement preparedStatement, T t);
+
+    protected abstract PreparedStatement prepareStatementForInsert(PreparedStatement preparedStatement, T t);
 }
 
