@@ -1,5 +1,7 @@
 package com.gabchak.dao;
 
+import com.gabchak.model.QueryBulder;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,6 +11,7 @@ import java.util.List;
 public abstract class AbstractDao<T, ID> implements GenericDao<T, ID> {
 
     protected final Connection connection;
+    private QueryBulder queryBulder = new QueryBulder();
 
     protected AbstractDao(Connection connection) {
         this.connection = connection;
@@ -25,9 +28,9 @@ public abstract class AbstractDao<T, ID> implements GenericDao<T, ID> {
     //rename method
     @Override
     public T findById(ID id) {
-        String query = "SELECT * FROM ? WHERE ID = ?";
+        String query = queryBulder.getSelectByIdQuery(connection.getClass());
         PreparedStatement preparedStatement;
-        T result;
+        T result = null;
         try {
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setObject(1, id);
@@ -36,7 +39,7 @@ public abstract class AbstractDao<T, ID> implements GenericDao<T, ID> {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return result;
     }
 
     protected abstract T getObjectFromResultSet(ResultSet resultSet); //Need implementation
