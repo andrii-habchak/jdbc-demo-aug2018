@@ -34,9 +34,8 @@ public abstract class AbstractDao<T, ID> implements GenericDao<T, ID> {
     }
     @Override
     public void update(T t) {
-        String query = queryBulder.getInsertQuery(connection.getClass());
+        String query = queryBulder.getUpdateQuery(connection.getClass());
         PreparedStatement preparedStatement;
-        int result = 0;
 
         try {
             preparedStatement = connection.prepareStatement(query);
@@ -79,6 +78,7 @@ public abstract class AbstractDao<T, ID> implements GenericDao<T, ID> {
 
     @Override
     public List<T> findAll() {
+
         return null;
     }
 
