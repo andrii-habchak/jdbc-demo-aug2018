@@ -62,16 +62,16 @@ public class UserDaoImpl implements UserDao {
                 "JOIN USER_TO_ROLE UTR ON U.ID = UTR.FK_USER_ID " +
                 "JOIN ROLES R ON UTR.FK_ROLE_ID = R.NAME " +
                 "WHERE U.TOKEN = ?";
-        return getUser(query, token);
+        return getUserByParam(query, token);
     }
 
     @Override
     public User findByEmail(String email) {
         String query = "SELECT ID, EMAIL, TOKEN, PASSWORD, FIRST_NAME, LAST_NAME FROM USERS WHERE EMAIL = ?";
-        return getUser(query, email);
+        return getUserByParam(query, email);
     }
 
-    private User getUser(String query, String param) {
+    private User getUserByParam(String query, String param) {
         PreparedStatement statement;
         ResultSet resultSet;
         User user = null;
@@ -79,7 +79,7 @@ public class UserDaoImpl implements UserDao {
             statement = connection.prepareStatement(query);
             statement.setString(1, param);
             resultSet = statement.executeQuery();
-            user = resultSet.next() ? getUser(resultSet) : null;
+            user = resultSet.next() ? getUserFromResultSet(resultSet) : null;
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -104,7 +104,7 @@ public class UserDaoImpl implements UserDao {
         return null;
     }
 
-    private User getUser(ResultSet resultSet) throws SQLException {
+    private User getUserFromResultSet(ResultSet resultSet) throws SQLException {
         return new User(
                 resultSet.getLong("ID"),
                 resultSet.getString("EMAIL"),
