@@ -16,11 +16,11 @@ public abstract class AbstractDao<T, ID> implements GenericDao<T, ID> {
 
 
     @Override
-    public void create(T t) {
+    public void insert(T t) {
 
     }
 
-    //create annotation for fields/methods
+    //insert annotation for fields/methods
     //use metadata for extract table name and column name
     //rename method
     @Override
@@ -47,13 +47,15 @@ public abstract class AbstractDao<T, ID> implements GenericDao<T, ID> {
     }
 
     @Override
-    public void delete(ID id) {
+    public void deleteById(ID id) {
 
     }
 
     @Override
-    public List<T> readAll() {
+    public List<T> findAll() {
         return null;
     }
+
+    abstract String createQuery(); //Собираем поля в query
 }
 
