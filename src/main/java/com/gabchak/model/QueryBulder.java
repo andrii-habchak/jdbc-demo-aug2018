@@ -26,6 +26,9 @@ public class QueryBulder {
                 " VALUES " + "(" + getQuestionMarks(inputClass) + ")" + " WHERE " + getIdFieldName(inputClass) + " = ?;";
     }
 
+    public String getSelectAllQuery(Class<?> inputClass) {
+        return "SELECT * FROM " + getTableName(inputClass);
+    }
 
     private String getTableName(Class<?> inputClass) {
         if (inputClass.isAnnotationPresent(TableName.class)) {
