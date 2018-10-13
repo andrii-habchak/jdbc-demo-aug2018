@@ -2,10 +2,8 @@ package com.gabchak.dao;
 
 import com.gabchak.model.QueryBulder;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class AbstractDao<T, ID> implements GenericDao<T, ID> {
@@ -78,8 +76,23 @@ public abstract class AbstractDao<T, ID> implements GenericDao<T, ID> {
 
     @Override
     public List<T> findAll() {
+        String query = queryBulder.getSelectAllQuery(connection.getClass());
+        Statement statement;
+        ResultSet resultSet;
+        List<T> resultList = new ArrayList<>();
 
-        return null;
+        try {
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(query);
+
+            while (resultSet.next()) {
+                resultList.add(getObjectFromResultSet(resultSet));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return resultList;
     }
 
     protected abstract T getObjectFromResultSet(ResultSet resultSet);
