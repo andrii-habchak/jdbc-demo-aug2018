@@ -24,6 +24,21 @@ public class CategoryDaoImpl extends AbstractDao<Category, Long> implements Cate
     }
 
     @Override
+    public void update(Category category) {
+        super.update(category);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        super.deleteById(id);
+    }
+
+    @Override
+    public void insert(Category category) {
+        super.insert(category);
+    }
+
+    @Override
     protected Category getObjectFromResultSet(ResultSet resultSet) {
         List<Product> products = new ArrayList<>();
         Category result = null;
@@ -49,12 +64,23 @@ public class CategoryDaoImpl extends AbstractDao<Category, Long> implements Cate
 
     @Override
     protected PreparedStatement prepareStatementForUpdate(PreparedStatement preparedStatement, Category category) {
-        return null;
+        try {
+            preparedStatement.setString(1, category.getName());
+            preparedStatement.setLong(2, category.getId());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return preparedStatement;
     }
 
     @Override
     protected PreparedStatement prepareStatementForInsert(PreparedStatement preparedStatement, Category category) {
-        return null;
+        try {
+            preparedStatement.setString(1, category.getName());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return preparedStatement;
     }
 
 }
