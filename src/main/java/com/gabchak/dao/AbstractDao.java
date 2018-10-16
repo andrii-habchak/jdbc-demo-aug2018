@@ -95,6 +95,22 @@ public abstract class AbstractDao<T, ID> implements GenericDao<T, ID> {
         return resultList;
     }
 
+    T getObjectByParam(String query, Object param) {
+        PreparedStatement preparedStatement;
+        ResultSet resultSet;
+        T resultObject = null;
+
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setObject(1, param);
+            resultSet = preparedStatement.executeQuery();
+            resultObject = resultSet.next() ? getObjectFromResultSet(resultSet) : null;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return resultObject;
+    }
+
     protected abstract T getObjectFromResultSet(ResultSet resultSet);
 
     protected abstract PreparedStatement prepareStatementForUpdate(PreparedStatement preparedStatement, T t);

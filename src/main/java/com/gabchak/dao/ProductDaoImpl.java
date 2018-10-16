@@ -6,91 +6,80 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductDaoImpl implements ProductDao {
-
-    protected final Connection connection;
+public class ProductDaoImpl extends AbstractDao<Product, Long> implements ProductDao {
 
     public ProductDaoImpl(Connection connection) {
-        this.connection = connection;
+        super(connection);
     }
 
-    public void save(Product product) {
-
-        String query = "INSERT INTO PRODUCTS (NAME, PRICE, DESCRIPTION) VALUES (?, ?, ?);";
-        PreparedStatement statement;
-        try {
-            statement = connection.prepareStatement(query);
-            statement.setString(1, product.getName());
-            statement.setDouble(2, product.getPrice());
-            statement.setString(3, product.getDescription());
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    @Override
+    public void insert(Product product) {
+        super.insert(product);
     }
 
     public Product findByName(String name) {
         String query = "SELECT ID, NAME, PRICE, DESCRIPTION FROM PRODUCTS WHERE NAME = ?";
-        PreparedStatement statement;
-        ResultSet resultSet;
-        Product product = null;
-
-        try {
-            statement = connection.prepareStatement(query);
-            statement.setString(1, "iPhone");
-            resultSet = statement.executeQuery();
-            product = resultSet.next() ? getProductFromResultSet(resultSet) : null;
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return product;
+        return super.getObjectByParam(query, name);
     }
 
     @Override
-    public Product findById(long id) {
-        String query = "SELECT P.ID, P.NAME, P.PRICE, P.DESCRIPTION " +
-                "FROM PRODUCTS P " +
-                "WHERE P.ID = ?";
-        PreparedStatement statement;
-        ResultSet resultSet;
-        Product result = new Product();
+    public Product findById(Long aLong) {
+        return super.findById(aLong);
+    }
 
+    @Override
+    public List<Product> findAll() {
+        return super.findAll();
+    }
+
+    @Override
+    public void update(Product product) {
+        super.update(product);
+    }
+
+    @Override
+    public void deleteById(Long aLong) {
+        super.deleteById(aLong);
+    }
+
+    @Override
+    protected Product getObjectFromResultSet(ResultSet resultSet) {
         try {
-            statement = connection.prepareStatement(query);
-            statement.setLong(1, id);
-            resultSet = statement.executeQuery();
-            result = resultSet.next() ? getProductFromResultSet(resultSet) : null;
+            return new Product(
+                    resultSet.getLong(1),
+                    resultSet.getString(2),
+                    resultSet.getDouble(3),
+                    resultSet.getString(4));
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        return result;
+        return null;
     }
 
-    public List<Product> findAll() {
-        String query = "SELECT ID, NAME, PRICE, DESCRIPTION FROM PRODUCTS";
-        List<Product> result = new ArrayList<>();
-        Statement statement;
-        ResultSet resultSet;
-
+    @Override
+    protected PreparedStatement prepareStatementForUpdate(PreparedStatement preparedStatement, Product product) {
         try {
-            statement = connection.createStatement();
-            resultSet = statement.executeQuery(query);
-            while (resultSet.next()){
-                result.add(getProductFromResultSet(resultSet));
-            }
-        }catch (SQLException e){
+            preparedStatement.setString(1, product.getName());
+            preparedStatement.setDouble(2, product.getPrice());
+            preparedStatement.setString(3, product.getDescription());
+            preparedStatement.setLong(4, product.getCategory().getId());
+            preparedStatement.setLong(5, product.getId());
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-        return result;
+        return preparedStatement;
     }
 
-    private Product getProductFromResultSet (ResultSet resultSet) throws SQLException{
-        return new Product(
-                resultSet.getLong(1),
-                resultSet.getString(2),
-                resultSet.getDouble(3),
-                resultSet.getString(4));
+    @Override
+    protected PreparedStatement prepareStatementForInsert(PreparedStatement preparedStatement, Product product) {
+        try {
+            preparedStatement.setString(1, product.getName());
+            preparedStatement.setDouble(2, product.getPrice());
+            preparedStatement.setString(3, product.getDescription());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return preparedStatement;
     }
+
 }
