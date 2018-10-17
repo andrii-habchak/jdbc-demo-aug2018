@@ -24,8 +24,8 @@ public class CategoryServiceImpl extends AbstractService<Category, Long> impleme
     }
 
     @Override
-    public Category findById(Long aLong) {
-        return super.findById(aLong);
+    public Category findById(Long id) {
+        return super.findById(id);
     }
 
     @Override
@@ -34,8 +34,8 @@ public class CategoryServiceImpl extends AbstractService<Category, Long> impleme
     }
 
     @Override
-    public void deleteById(Long aLong) {
-        super.deleteById(aLong);
+    public void deleteById(Long id) {
+        super.deleteById(id);
     }
 
     @Override
