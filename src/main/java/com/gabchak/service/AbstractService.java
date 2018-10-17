@@ -13,8 +13,8 @@ public abstract class AbstractService<T, ID> implements Service<T, ID> {
         this.genericDao = genericDao;
     }
 
-    public void insert(Category category) {
-        genericDao.insert(category);
+    public void insert(T t) {
+        genericDao.insert(t);
     }
 
     public T findById(ID id) {
