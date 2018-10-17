@@ -1,6 +1,6 @@
 package com.gabchak.dao;
 
-import com.gabchak.model.QueryBulder;
+import com.gabchak.model.QueryBuilder;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -9,7 +9,7 @@ import java.util.List;
 public abstract class AbstractDao<T, ID> implements GenericDao<T, ID> {
 
     private final Connection connection;
-    private QueryBulder queryBulder = new QueryBulder();
+    private QueryBuilder queryBuilder = new QueryBuilder();
 
     protected AbstractDao(Connection connection) {
         this.connection = connection;
@@ -17,7 +17,7 @@ public abstract class AbstractDao<T, ID> implements GenericDao<T, ID> {
 
     @Override
     public T findById(ID id) {
-        String query = queryBulder.getSelectByIdQuery(connection.getClass());
+        String query = queryBuilder.getSelectByIdQuery(connection.getClass());
         PreparedStatement preparedStatement;
         T result = null;
         try {
@@ -32,7 +32,7 @@ public abstract class AbstractDao<T, ID> implements GenericDao<T, ID> {
     }
     @Override
     public void update(T t) {
-        String query = queryBulder.getUpdateQuery(connection.getClass());
+        String query = queryBuilder.getUpdateQuery(connection.getClass());
         PreparedStatement preparedStatement;
 
         try {
@@ -47,7 +47,7 @@ public abstract class AbstractDao<T, ID> implements GenericDao<T, ID> {
 
     @Override
     public void deleteById(ID id) {
-        String query = queryBulder.getDeleteByIdQuery(connection.getClass());
+        String query = queryBuilder.getDeleteByIdQuery(connection.getClass());
         PreparedStatement preparedStatement;
 
         try {
@@ -61,7 +61,7 @@ public abstract class AbstractDao<T, ID> implements GenericDao<T, ID> {
 
     @Override
     public void insert(T t) {
-        String query = queryBulder.getInsertQuery(connection.getClass());
+        String query = queryBuilder.getInsertQuery(connection.getClass());
         PreparedStatement preparedStatement;
 
         try {
@@ -74,7 +74,7 @@ public abstract class AbstractDao<T, ID> implements GenericDao<T, ID> {
     }
 
     public ID insertAndGetID(T t) {
-        String query = queryBulder.getInsertQuery(connection.getClass());
+        String query = queryBuilder.getInsertQuery(connection.getClass());
         PreparedStatement preparedStatement;
         ResultSet resultSet;
         ID key = null;
@@ -94,7 +94,7 @@ public abstract class AbstractDao<T, ID> implements GenericDao<T, ID> {
 
     @Override
     public List<T> findAll() {
-        String query = queryBulder.getSelectAllQuery(connection.getClass());
+        String query = queryBuilder.getSelectAllQuery(connection.getClass());
         Statement statement;
         ResultSet resultSet;
         List<T> resultList = new ArrayList<>();
