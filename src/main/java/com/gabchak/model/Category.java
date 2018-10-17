@@ -6,7 +6,7 @@ public class Category {
 
     private Long id;
     private String name;
-    List<Product> products;
+    private List<Product> products;
 
     public Category(Long id, String name, List<Product> products) {
         this.id = id;
