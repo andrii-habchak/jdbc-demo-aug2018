@@ -6,17 +6,38 @@ import com.gabchak.model.User;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 import java.util.UUID;
 
 import static com.gabchak.model.Role.RoleName.USER;
 
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl extends AbstractService<User, Long> implements UserService {
     private final UserDao userDao;
 
     public UserServiceImpl(UserDao userDao) {
+        super(userDao);
         this.userDao = userDao;
     }
 
+    @Override
+    public User findById(Long id) {
+        return super.findById(id);
+    }
+
+    @Override
+    public void update(User user) {
+        super.update(user);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        super.deleteById(id);
+    }
+
+    @Override
+    public List<User> findAll() {
+        return super.findAll();
+    }
 
     @Override
     public User addUser(User user) {
@@ -51,7 +72,7 @@ public class UserServiceImpl implements UserService {
     }
 
     private String hashPassword(String password) {
-        MessageDigest digest = null;
+        MessageDigest digest;
         byte[] encodedHash = null;
         try {
             digest = MessageDigest.getInstance("SHA-256");
@@ -64,9 +85,9 @@ public class UserServiceImpl implements UserService {
 
     private String bytesToHex(byte[] hash) {
         StringBuffer hexString = new StringBuffer();
-        for (int i = 0; i < hash.length; i++) {
-            String hex = Integer.toHexString(0xff & hash[i]);
-            if(hex.length() == 1) hexString.append('0');
+        for (byte aHash : hash) {
+            String hex = Integer.toHexString(0xff & aHash);
+            if (hex.length() == 1) hexString.append('0');
             hexString.append(hex);
         }
         return hexString.toString();
