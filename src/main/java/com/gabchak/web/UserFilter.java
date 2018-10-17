@@ -1,10 +1,10 @@
 package com.gabchak.web;
 
 import com.gabchak.Factory;
-import com.gabchak.dao.UserDao;
 import com.gabchak.model.Role;
 import com.gabchak.model.Role.RoleName;
 import com.gabchak.model.User;
+import com.gabchak.service.UserService;
 
 import javax.servlet.*;
 import javax.servlet.http.Cookie;
@@ -19,12 +19,12 @@ import static com.gabchak.model.Role.RoleName.USER;
 public class UserFilter implements Filter {
 
     private final Map<String, RoleName> protectedUriMap = new HashMap<>();
-    private UserDao userDao;
+    private UserService userService;
     private String COOKIE_NAME = "MATE";
 
     @Override
     public void init(FilterConfig filterConfig) {
-        userDao = Factory.getUserDao();
+        userService = Factory.getUserService();
         protectedUriMap.put("servlet/categories", USER);
         protectedUriMap.put("servlet/category", USER);
         protectedUriMap.put("servlet/products", USER);
@@ -53,7 +53,7 @@ public class UserFilter implements Filter {
             if (token == null) {
                 processUnauthenticated(servletRequest, servletResponse);
             } else {
-                user = userDao.findByToken(token);
+                user = userService.findByToken(token);
                 if (user == null) {
                     processUnauthenticated(servletRequest, servletResponse);
                 } else {
