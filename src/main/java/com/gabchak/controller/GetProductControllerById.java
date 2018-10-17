@@ -1,22 +1,21 @@
 package com.gabchak.controller;
 
-import com.gabchak.dao.ProductDao;
-import com.gabchak.dao.ProductDaoImpl;
 import com.gabchak.model.Product;
+import com.gabchak.service.ProductService;
 import com.gabchak.web.Request;
 import com.gabchak.web.ViewModel;
 
 public class GetProductControllerById implements Controller {
 
-    private final ProductDaoImpl productDao;
+    private final ProductService productService;
 
-    public GetProductControllerById(ProductDaoImpl productDao) {
-        this.productDao = productDao;
+    public GetProductControllerById(ProductService productService) {
+        this.productService = productService;
     }
 
     @Override
     public ViewModel process(Request request) {
-        Product product = productDao.findById(getIdFromRequest(request));
+        Product product = productService.findById(getIdFromRequest(request));
         ViewModel vm = ViewModel.of("product");
         vm.addAttribute("product", product);
         return vm;

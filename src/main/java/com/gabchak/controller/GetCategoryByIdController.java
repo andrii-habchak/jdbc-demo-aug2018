@@ -1,20 +1,20 @@
 package com.gabchak.controller;
 
-import com.gabchak.dao.CategoryDao;
 import com.gabchak.model.Category;
+import com.gabchak.service.CategoryService;
 import com.gabchak.web.Request;
 import com.gabchak.web.ViewModel;
 
 public class GetCategoryByIdController implements Controller {
-    private final CategoryDao categoryDao;
+    private final CategoryService categoryService;
 
-    public GetCategoryByIdController(CategoryDao categoryDao) {
-        this.categoryDao = categoryDao;
+    public GetCategoryByIdController(CategoryService categoryService) {
+        this.categoryService = categoryService;
     }
 
     @Override
     public ViewModel process(Request request) {
-        Category category = categoryDao.findById(getIdFromRequest(request));
+        Category category = categoryService.findById(getIdFromRequest(request));
         ViewModel vm = ViewModel.of("category");
         vm.addAttribute("category", category);
         return vm;
