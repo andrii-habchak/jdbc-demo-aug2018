@@ -58,6 +58,11 @@ public class UserServiceImpl extends AbstractService<User, Long> implements User
     }
 
     @Override
+    public User findByToken(String token) {
+        return userDao.findByToken(token);
+    }
+
+    @Override
     public boolean validatePassword(User user, String password) {
         boolean result = false;
         if (user != null) {

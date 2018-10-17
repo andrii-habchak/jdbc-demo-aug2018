@@ -10,4 +10,6 @@ public interface UserService extends Service<User, Long> {
     User findByEmail(String email);
 
     boolean validatePassword(User user, String password);
+
+    User findByToken(String token);
 }
