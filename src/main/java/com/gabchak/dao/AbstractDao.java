@@ -71,7 +71,25 @@ public abstract class AbstractDao<T, ID> implements GenericDao<T, ID> {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
 
+    public ID insertAndGetID(T t) {
+        String query = queryBulder.getInsertQuery(connection.getClass());
+        PreparedStatement preparedStatement;
+        ResultSet resultSet;
+        ID key = null;
+
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement = prepareStatementForInsert(preparedStatement, t);
+            preparedStatement.executeUpdate();
+
+            resultSet = preparedStatement.getGeneratedKeys();
+            key = resultSet.next() ? (ID) resultSet.getObject(1) : null;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return key;
     }
 
     @Override
