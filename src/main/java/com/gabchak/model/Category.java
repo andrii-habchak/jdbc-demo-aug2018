@@ -1,10 +1,16 @@
 package com.gabchak.model;
 
+import com.gabchak.metaData.ColumnName;
+import com.gabchak.metaData.TableName;
+
 import java.util.List;
 
+@TableName("CATEGORIES")
 public class Category {
 
+    @ColumnName
     private Long id;
+    @ColumnName
     private String name;
     private List<Product> products;
 
@@ -14,8 +20,8 @@ public class Category {
         this.products = products;
     }
 
-    public Category() {
-
+    public Category(String name) {
+        this.name = name;
     }
 
     public Long getId() {

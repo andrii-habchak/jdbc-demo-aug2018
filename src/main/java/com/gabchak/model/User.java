@@ -1,14 +1,24 @@
 package com.gabchak.model;
 
+import com.gabchak.metaData.ColumnName;
+import com.gabchak.metaData.TableName;
+
 import java.util.HashSet;
 import java.util.Set;
 
+@TableName("USERS")
 public class User {
+    @ColumnName
     private Long id;
+    @ColumnName
     private String email;
+    @ColumnName
     private String password;
+    @ColumnName
     private String firstName;
+    @ColumnName
     private String lastName;
+    @ColumnName
     private String token;
     private Set<Role> roles = new HashSet<>();
 

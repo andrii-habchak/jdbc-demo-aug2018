@@ -1,10 +1,19 @@
 package com.gabchak.model;
 
+import com.gabchak.metaData.ColumnName;
+import com.gabchak.metaData.TableName;
+
+@TableName("PRODUCTS")
 public class Product {
+    @ColumnName
     private Long id;
+    @ColumnName
     private String name;
+    @ColumnName
     private Double price;
+    @ColumnName
     private String description;
+    @ColumnName
     private Category category;
 
     public Product() {

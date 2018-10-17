@@ -1,7 +1,12 @@
 package com.gabchak.model;
 
+import com.gabchak.metaData.ColumnName;
+import com.gabchak.metaData.TableName;
+
+@TableName("ROLE")
 public class Role {
 
+    @ColumnName
     private RoleName roleName;
     private User user;
 
