@@ -2,8 +2,7 @@ package com.gabchak;
 
 import com.gabchak.controller.*;
 import com.gabchak.dao.*;
-import com.gabchak.service.UserService;
-import com.gabchak.service.UserServiceImpl;
+import com.gabchak.service.*;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -26,51 +25,59 @@ public class Factory {
         return connection;
     }
 
+    public static Controller getGetCategoryByIdController() {
+        return new GetCategoryByIdController(getCategoryService(getCategoryDao(getConnection())));
+    }
+
     public static GetAllCategoriesController getAllCategoriesController() {
-        return  new GetAllCategoriesController(getCategoryDaoImpl(getConnection()));
-    }
-
-    public static CategoryDaoImpl getCategoryDaoImpl(Connection connection) {
-        return new CategoryDaoImpl(connection);
-    }
-
-    public static PageNotFoundController getPageNotFoundController() {
-        return new  PageNotFoundController();
-    }
-
-    public static UserService getUserService() {
-        return new UserServiceImpl(getUserDao());
-    }
-
-    public static UserDao getUserDao() {
-        return new UserDaoImpl(getConnection());
-    }
-
-    public static RegisterController getRegisterController() {
-        return new RegisterController(getUserService());
-    }
-
-    public static UserServiceImpl getUserServiceImpl() {
-        return new UserServiceImpl(getUserDao());
+        return  new GetAllCategoriesController(getCategoryService(getCategoryDao(getConnection())));
     }
 
     public static Controller getLoginPageController() {
-        return new LoginController(getUserService());
-    }
-
-    public static Controller getGetCategoryByIdController() {
-        return new GetCategoryByIdController(getCategoryDaoImpl(getConnection()));
-    }
-
-    public static Controller getProductByIdController() {
-        return new GetProductControllerById(getProductDao());
-    }
-
-    private static ProductDaoImpl getProductDao() {
-        return new ProductDaoImpl(connection);
+        return new LoginController(getUserService(getUserDao(getConnection())));
     }
 
     public static Controller getLogoutController() {
         return new LogoutController();
+    }
+
+    public static Controller getRegisterController() {
+        return new RegisterController(getUserService(getUserDao(getConnection())));
+    }
+
+    public static Controller getProductByIdController() {
+        return new GetProductControllerById(getProductService(getProductDao(getConnection())));
+    }
+
+    public static Controller getPageNotFoundController() {
+        return new  PageNotFoundController();
+    }
+
+
+
+    public static CategoryService getCategoryService(CategoryDao categoryDao) {
+        return new CategoryServiceImpl(categoryDao);
+    }
+
+    public static UserService getUserService(UserDao userDao) {
+        return new UserServiceImpl(userDao);
+    }
+
+    public static ProductService getProductService(ProductDao productDao) {
+        return new ProductServiceImpl(productDao);
+    }
+
+
+
+    public static CategoryDao getCategoryDao(Connection connection) {
+        return new CategoryDaoImpl(connection);
+    }
+
+    public static UserDao getUserDao(Connection connection) {
+        return new UserDaoImpl(connection);
+    }
+
+    private static ProductDao getProductDao(Connection connection) {
+        return new ProductDaoImpl(connection);
     }
 }
