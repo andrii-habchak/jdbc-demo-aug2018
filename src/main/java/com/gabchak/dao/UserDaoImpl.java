@@ -18,7 +18,6 @@ public class UserDaoImpl extends AbstractDao<User, Long> implements UserDao {
         this.connection = connection;
     }
 
-
     @Override
     public User addUser(User user) {
         String roleQuery = "INSERT INTO USER_TO_ROLE (FK_USER_ID, FK_ROLE_ID) VALUES (?, ?)";
@@ -41,11 +40,6 @@ public class UserDaoImpl extends AbstractDao<User, Long> implements UserDao {
     }
 
     @Override
-    public void insert(User user) {
-        super.insert(user);
-    }
-
-    @Override
     public User findByToken(String token) {
         String query = "SELECT U.ID, U.EMAIL, U.TOKEN, U.PASSWORD, U.FIRST_NAME, U.LAST_NAME, R.NAME FROM USERS " +
                 "JOIN USER_TO_ROLE UTR ON U.ID = UTR.FK_USER_ID " +
@@ -55,7 +49,7 @@ public class UserDaoImpl extends AbstractDao<User, Long> implements UserDao {
     }
 
     @Override
-    public void updateUser(User user) {
+    public void update(User user) {
         super.update(user);
     }
 

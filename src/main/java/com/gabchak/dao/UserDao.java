@@ -10,7 +10,4 @@ public interface UserDao extends GenericDao<User, Long> {
 
     User findByToken(String token);
 
-    void deleteById(Long id);
-
-    void updateUser(User user);
 }
