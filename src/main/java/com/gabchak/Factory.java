@@ -26,15 +26,15 @@ public class Factory {
     }
 
     public static Controller getGetCategoryByIdController() {
-        return new GetCategoryByIdController(getCategoryService(getCategoryDao(getConnection())));
+        return new GetCategoryByIdController(getCategoryService());
     }
 
     public static GetAllCategoriesController getAllCategoriesController() {
-        return  new GetAllCategoriesController(getCategoryService(getCategoryDao(getConnection())));
+        return  new GetAllCategoriesController(getCategoryService());
     }
 
     public static Controller getLoginPageController() {
-        return new LoginController(getUserService(getUserDao(getConnection())));
+        return new LoginController(getUserService());
     }
 
     public static Controller getLogoutController() {
@@ -42,11 +42,11 @@ public class Factory {
     }
 
     public static Controller getRegisterController() {
-        return new RegisterController(getUserService(getUserDao(getConnection())));
+        return new RegisterController(getUserService());
     }
 
     public static Controller getProductByIdController() {
-        return new GetProductControllerById(getProductService(getProductDao(getConnection())));
+        return new GetProductControllerById(getProductService());
     }
 
     public static Controller getPageNotFoundController() {
@@ -55,16 +55,16 @@ public class Factory {
 
 
 
-    public static CategoryService getCategoryService(CategoryDao categoryDao) {
-        return new CategoryServiceImpl(categoryDao);
+    public static CategoryService getCategoryService() {
+        return new CategoryServiceImpl(getCategoryDao(getConnection()));
     }
 
-    public static UserService getUserService(UserDao userDao) {
-        return new UserServiceImpl(userDao);
+    public static UserService getUserService() {
+        return new UserServiceImpl(getUserDao(getConnection()));
     }
 
-    public static ProductService getProductService(ProductDao productDao) {
-        return new ProductServiceImpl(productDao);
+    public static ProductService getProductService() {
+        return new ProductServiceImpl(getProductDao(getConnection()));
     }
 
 
