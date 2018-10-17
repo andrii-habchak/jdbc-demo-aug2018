@@ -2,12 +2,15 @@ package com.gabchak.dao;
 
 import com.gabchak.model.User;
 
-public interface UserDao {
+public interface UserDao extends GenericDao<User, Long> {
 
+    User addUser(User user);
 
-    public User addUser(User user);
-
-    public User findByEmail(String email);
+    User findByEmail(String email);
 
     User findByToken(String token);
+
+    void deleteById(Long id);
+
+    void updateUser(User user);
 }
