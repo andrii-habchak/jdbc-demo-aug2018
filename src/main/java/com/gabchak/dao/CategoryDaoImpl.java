@@ -14,7 +14,7 @@ public class CategoryDaoImpl extends AbstractDao<Category, Long> implements Cate
     }
 
     @Override
-    public Category findById(long id) {
+    public Category findById(Long id) {
         return super.findById(id);
     }
 
@@ -36,6 +36,12 @@ public class CategoryDaoImpl extends AbstractDao<Category, Long> implements Cate
     @Override
     public void insert(Category category) {
         super.insert(category);
+    }
+
+    @Override
+    public Category findByName(String name) {
+        String query = "SELECT * FROM CATEGORIES WHERE NAME = ?";
+        return super.getObjectByParam(query, name);
     }
 
     @Override
