@@ -5,7 +5,7 @@ import com.gabchak.metaData.TableName;
 
 import java.lang.reflect.Field;
 
-public class QueryBulder {
+public class QueryBuilder {
 
     private int questionCountForInsertQuery;
 
