@@ -14,28 +14,64 @@ public class QueryBuilderTest {
     }
 
     @org.junit.Test
-    public void ProductGetSelectByIdQuery() {
+    public void categoryGetSelectByIdQuery() {
+        String expected = "SELECT * FROM CATEGORIES WHERE ID = ?;";
+        String actually = queryBuilder.getSelectByIdQuery(Category.class);
+        assertEquals(expected, actually);
+    }
+
+    @org.junit.Test
+    public void categoryGetDeleteByIdQuery() {
+        String expected = "DELETE CATEGORIES WHERE ID = ?;";
+        String actually = queryBuilder.getDeleteByIdQuery(Category.class);
+        assertEquals(expected, actually);
+    }
+
+    @org.junit.Test
+    public void categoryGetUpdateQuery() {
+        String expected = "UPDATE CATEGORIES SET CATEGORY_NAME = ? WHERE ID = ?;";
+        String actually = queryBuilder.getUpdateQuery(Category.class);
+        assertEquals(expected, actually);
+    }
+
+    @org.junit.Test
+    public void categoryGetInsertQuery() {
+        String expected = "INSERT INTO CATEGORIES (NAME)" +
+                " VALUES (?) WHERE ID = ?;";
+        String actually = queryBuilder.getInsertQuery(Category.class);
+        assertEquals(expected, actually);
+    }
+
+    @org.junit.Test
+    public void categoryGetSelectAllQuery() {
+        String expected = "SELECT * FROM CATEGORIES";
+        String actually = queryBuilder.getSelectAllQuery(Category.class);
+        assertEquals(expected, actually);
+    }
+
+    @org.junit.Test
+    public void productGetSelectByIdQuery() {
         String expected = "SELECT * FROM PRODUCTS WHERE ID = ?;";
         String actually = queryBuilder.getSelectByIdQuery(Product.class);
         assertEquals(expected, actually);
     }
 
     @org.junit.Test
-    public void ProductGetDeleteByIdQuery() {
+    public void productGetDeleteByIdQuery() {
         String expected = "DELETE PRODUCTS WHERE ID = ?;";
         String actually = queryBuilder.getDeleteByIdQuery(Product.class);
         assertEquals(expected, actually);
     }
 
     @org.junit.Test
-    public void ProductGetUpdateQuery() {
+    public void productGetUpdateQuery() {
         String expected = "UPDATE PRODUCTS SET NAME = ?, PRICE = ?, DESCRIPTION = ?, FK_CATEGORIES = ? WHERE ID = ?;";
         String actually = queryBuilder.getUpdateQuery(Product.class);
         assertEquals(expected, actually);
     }
 
     @org.junit.Test
-    public void ProductGetInsertQuery() {
+    public void productGetInsertQuery() {
         String expected = "INSERT INTO PRODUCTS (NAME, PRICE, DESCRIPTION, FK_CATEGORIES)" +
                 " VALUES (?, ?, ?, ?) WHERE ID = ?;";
         String actually = queryBuilder.getInsertQuery(Product.class);
@@ -43,7 +79,7 @@ public class QueryBuilderTest {
     }
 
     @org.junit.Test
-    public void ProductGetSelectAllQuery() {
+    public void productGetSelectAllQuery() {
         String expected = "SELECT * FROM PRODUCTS";
         String actually = queryBuilder.getSelectAllQuery(Product.class);
         assertEquals(expected, actually);
