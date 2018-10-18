@@ -1,6 +1,7 @@
 package com.gabchak;
 
 import com.gabchak.controller.*;
+import com.gabchak.controller.admin.GetAllCategoriesAdminController;
 import com.gabchak.dao.*;
 import com.gabchak.service.UserService;
 import com.gabchak.service.UserServiceImpl;
@@ -74,5 +75,9 @@ public class Factory {
 
     public static Controller getLogoutController() {
         return new LogoutController();
+    }
+
+    public static Controller getAllCategoriesAdminController() {
+        return new GetAllCategoriesAdminController(getCategoryDaoImpl(getConnection()));
     }
 }
