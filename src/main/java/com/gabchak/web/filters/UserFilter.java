@@ -20,7 +20,7 @@ public class UserFilter implements Filter {
 
     private final Map<String, RoleName> protectedUriMap = new HashMap<>();
     private UserDao userDao;
-    private String COOKIE_NAME = "MATE";
+    private static final String COOKIE_NAME = "MATE";
 
     @Override
     public void init(FilterConfig filterConfig) {
@@ -98,5 +98,9 @@ public class UserFilter implements Filter {
     @Override
     public void destroy() {
 
+    }
+
+    public static String getCookieName() {
+        return COOKIE_NAME;
     }
 }

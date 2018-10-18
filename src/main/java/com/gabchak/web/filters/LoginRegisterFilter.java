@@ -11,10 +11,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static com.gabchak.Factory.getUserDao;
+import static com.gabchak.web.filters.UserFilter.getCookieName;
 
 public class LoginRegisterFilter implements Filter {
 
-    private static final String COOKIE_NAME = "MATE";
     private final Set<String> uriSet = new HashSet<>();
     private UserDao userDao;
 
@@ -33,7 +33,7 @@ public class LoginRegisterFilter implements Filter {
         User user = null;
 
         for (Cookie cookie : cookies) {
-            if (cookie.getName().equals(COOKIE_NAME)) {
+            if (cookie.getName().equals(getCookieName())) {
                 token = cookie.getValue();
             }
         }
