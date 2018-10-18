@@ -79,14 +79,14 @@ public class UserDaoImpl implements UserDao {
             statement = connection.prepareStatement(query);
             statement.setString(1, param);
             resultSet = statement.executeQuery();
-            user = resultSet.next() ? getUser(resultSet) : null;
+            user = resultSet.next() ? getUserFromResultSet(resultSet) : null;
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return user;
     }
 
-    private User getUserWithRole(ResultSet resultSet) throws SQLException {
+    private User getUserWithRoleFromResultSet(ResultSet resultSet) throws SQLException {
         User user = new User(
                 resultSet.getLong("ID"),
                 resultSet.getString("EMAIL"),
@@ -104,7 +104,7 @@ public class UserDaoImpl implements UserDao {
         return null;
     }
 
-    private User getUser(ResultSet resultSet) throws SQLException {
+    private User getUserFromResultSet(ResultSet resultSet) throws SQLException {
         return new User(
                 resultSet.getLong("ID"),
                 resultSet.getString("EMAIL"),

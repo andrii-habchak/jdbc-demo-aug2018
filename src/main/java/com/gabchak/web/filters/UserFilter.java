@@ -1,4 +1,4 @@
-package com.gabchak.web;
+package com.gabchak.web.filters;
 
 import com.gabchak.Factory;
 import com.gabchak.dao.UserDao;
@@ -39,7 +39,7 @@ public class UserFilter implements Filter {
         Cookie[] cookies = request.getCookies();
         RoleName roleName = protectedUriMap.get(request.getRequestURI());
         String token = null;
-        User user;
+        User user = null;
 
         if (roleName == null) {
             processAuthenticated(servletRequest, servletResponse, filterChain);
@@ -50,23 +50,29 @@ public class UserFilter implements Filter {
             if (cookie.getName().equals(COOKIE_NAME)) {
                 token = cookie.getValue();
             }
-            if (token == null) {
+        }
+
+        if (token == null) {
+            processUnauthenticated(servletRequest, servletResponse);
+        } else {
+            setUser(request, user);
+            user = userDao.findByToken(token);
+            if (user == null) {
                 processUnauthenticated(servletRequest, servletResponse);
             } else {
-                user = userDao.findByToken(token);
-                if (user == null) {
-                    processUnauthenticated(servletRequest, servletResponse);
+                if (verifyRole(user, roleName)) {
+                    setUser(request, user);
+                    processAuthenticated(servletRequest, servletResponse, filterChain);
                 } else {
-                    if (verifyRole(user, roleName)) {
-                        request.setAttribute("user", user);
-                        processAuthenticated(servletRequest, servletResponse, filterChain);
-                    } else {
-                        processAccessDenied(servletRequest, servletResponse, filterChain);
-                    }
+                    processAccessDenied(servletRequest, servletResponse, filterChain);
                 }
             }
         }
 
+    }
+
+    private void setUser(HttpServletRequest request, User user) {
+        request.setAttribute("user", user);
     }
 
     private void processAccessDenied(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws ServletException, IOException {
