@@ -1,11 +1,10 @@
 package com.gabchak.dao;
 
+import com.gabchak.Factory;
+import com.gabchak.model.QueryBuilder;
 import com.gabchak.model.User;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 import static com.gabchak.model.Role.RoleName.USER;
 
@@ -20,12 +19,24 @@ public class UserDaoImpl extends AbstractDao<User, Long> implements UserDao {
 
     @Override
     public User addUser(User user) {
+        String userQuery = Factory.getQueryBuilder().getInsertQuery(user.getClass());
         String roleQuery = "INSERT INTO USER_TO_ROLE (FK_USER_ID, FK_ROLE_ID) VALUES (?, ?)";
+        PreparedStatement userStatement;
         PreparedStatement roleStatement;
 
         try {
             connection.setAutoCommit(false);
-            Long userId = super.insertAndGetID(user);
+            userStatement = connection.prepareStatement(userQuery, Statement.RETURN_GENERATED_KEYS);
+            userStatement = prepareStatementForInsert(userStatement, user);
+            userStatement.executeUpdate();
+
+            ResultSet resultSet = userStatement.getGeneratedKeys();
+            long userId = 0;
+            if (resultSet.next()) {
+                userId = resultSet.getLong(1);
+            } else {
+                connection.rollback();
+            }
 
             roleStatement = connection.prepareStatement(roleQuery);
             roleStatement.setLong(1, userId);
@@ -34,7 +45,12 @@ public class UserDaoImpl extends AbstractDao<User, Long> implements UserDao {
 
             connection.commit();
         } catch (SQLException e) {
-            e.printStackTrace();
+            try {
+                connection.rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+                throw new RuntimeException(e.getMessage());
+            }
         }
         return user;
     }
