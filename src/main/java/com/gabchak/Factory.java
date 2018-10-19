@@ -2,6 +2,7 @@ package com.gabchak;
 
 import com.gabchak.controller.*;
 import com.gabchak.dao.*;
+import com.gabchak.model.QueryBuilder;
 import com.gabchak.service.*;
 
 import java.sql.Connection;
@@ -68,12 +69,16 @@ public class Factory {
     }
 
 
+    public static QueryBuilder getQueryBuilder() {
+        return new QueryBuilder();
+    }
 
-    public static CategoryDao getCategoryDao(Connection connection) {
+
+    private static CategoryDao getCategoryDao(Connection connection) {
         return new CategoryDaoImpl(connection);
     }
 
-    public static UserDao getUserDao(Connection connection) {
+    private static UserDao getUserDao(Connection connection) {
         return new UserDaoImpl(connection);
     }
 
