@@ -61,7 +61,7 @@ public abstract class AbstractDao<T, ID> implements GenericDao<T, ID> {
 
     @Override
     public void insert(T t) {
-        String query = queryBuilder.getInsertQuery(connection.getClass());
+        String query = queryBuilder.getInsertQuery(t.getClass());
         PreparedStatement preparedStatement;
 
         try {
@@ -74,13 +74,13 @@ public abstract class AbstractDao<T, ID> implements GenericDao<T, ID> {
     }
 
     public ID insertAndGetID(T t) {
-        String query = queryBuilder.getInsertQuery(connection.getClass());
+        String query = queryBuilder.getInsertQuery(t.getClass());
         PreparedStatement preparedStatement;
         ResultSet resultSet;
         ID key = null;
 
         try {
-            preparedStatement = connection.prepareStatement(query);
+            preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             preparedStatement = prepareStatementForInsert(preparedStatement, t);
             preparedStatement.executeUpdate();
 
