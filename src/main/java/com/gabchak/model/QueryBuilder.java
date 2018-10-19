@@ -7,7 +7,7 @@ import java.lang.reflect.Field;
 
 public class QueryBuilder {
 
-    private int questionCountForInsertQuery;
+    private int count;
 
     public String getSelectByIdQuery(Class<?> inputClass) {
         return "SELECT * FROM " + getTableName(inputClass) + " WHERE " + getIdFieldName(inputClass) + " = ?;";
@@ -22,8 +22,8 @@ public class QueryBuilder {
     }
 
     public String getInsertQuery(Class<?> inputClass) {
-        return "INSERT INTO " + getTableName(inputClass) + "(" + getColumnsNameForInsert(inputClass) + ")" +
-                " VALUES " + "(" + getQuestionMarks(inputClass) + ")" + " WHERE " + getIdFieldName(inputClass) + " = ?;";
+        return "INSERT INTO " + getTableName(inputClass) + " (" + getColumnsNameForInsert(inputClass) + ")" +
+                " VALUES " + "(" + getQuestionMarks() + ")" + " WHERE " + getIdFieldName(inputClass) + " = ?;";
     }
 
     public String getSelectAllQuery(Class<?> inputClass) {
@@ -35,14 +35,15 @@ public class QueryBuilder {
             TableName tableName = inputClass.getAnnotation(TableName.class);
             return tableName.value().toUpperCase();
         }
-        return "No Table Annotation";
+        return "No Table";
     }
 
     private String getIdFieldName(Class<?> inputClass) {
         Field[] allFields = inputClass.getDeclaredFields();
         for (Field field : allFields) {
-            if (field.isAnnotationPresent(ColumnName.class) && field.getName().contains("id")) {
-                return field.getName().toUpperCase();
+            ColumnName columnName = field.getAnnotation(ColumnName.class);
+            if (field.isAnnotationPresent(ColumnName.class) && !columnName.value().equals("") && columnName.value().contains("ID")) {
+                return columnName.value().toUpperCase();
             }
         }
         return "No ID";
@@ -52,12 +53,15 @@ public class QueryBuilder {
         Field[] allFields = inputClass.getDeclaredFields();
         StringBuilder query = new StringBuilder();
         for (Field field : allFields) {
-            if (field.isAnnotationPresent(ColumnName.class) && !field.getName().contains("id")) {
-                query.append(field.getName());
+            ColumnName columnName = field.getAnnotation(ColumnName.class);
+            if (field.isAnnotationPresent(ColumnName.class) && !columnName.value().equals("") && !columnName.value().contains("ID")) {
+                query.append(columnName.value());
                 query.append(" = ?, ");
             }
         }
-        query.setLength(query.length() - 2);
+        if (query.length() > 2) {
+            query.setLength(query.length() - 2);
+        }
 
         return query.toString().toUpperCase();
     }
@@ -66,24 +70,28 @@ public class QueryBuilder {
         Field[] allFields = inputClass.getDeclaredFields();
         StringBuilder query = new StringBuilder();
         for (Field field : allFields) {
-            if (field.isAnnotationPresent(ColumnName.class) && !field.getName().contains("id")) {
-                query.append(field.getName());
+            ColumnName columnName = field.getAnnotation(ColumnName.class);
+            if (field.isAnnotationPresent(ColumnName.class) && !columnName.value().equals("") && !columnName.value().contains("ID")) {
+                query.append(columnName.value());
                 query.append(", ");
-                questionCountForInsertQuery++;
+                count++;
             }
         }
-        query.setLength(query.length() - 2);
+        if (query.length() > 2) {
+            query.setLength(query.length() - 2);
+        }
         return query.toString().toUpperCase();
     }
 
-    private String getQuestionMarks(Class<?> inputClass) {
+    private String getQuestionMarks() {
         StringBuilder query = new StringBuilder();
-        for (int i = 0; i < questionCountForInsertQuery; i++) {
+        for (int i = 0; i < count; i++) {
             query.append("?, ");
         }
-        if (questionCountForInsertQuery != 0) {
+        if (count != 0) {
             query.setLength(query.length() - 2);
         }
+        count = 0;
         return query.toString();
     }
 
