@@ -6,7 +6,7 @@ import com.gabchak.metaData.TableName;
 @TableName("ROLE")
 public class Role {
 
-    @ColumnName
+    @ColumnName("NAME")
     private RoleName roleName;
     private User user;
 

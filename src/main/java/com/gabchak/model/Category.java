@@ -8,9 +8,9 @@ import java.util.List;
 @TableName("CATEGORIES")
 public class Category {
 
-    @ColumnName
+    @ColumnName("ID")
     private Long id;
-    @ColumnName
+    @ColumnName("CATEGORY_NAME")
     private String name;
     private List<Product> products;
 

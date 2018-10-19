@@ -5,15 +5,15 @@ import com.gabchak.metaData.TableName;
 
 @TableName("PRODUCTS")
 public class Product {
-    @ColumnName
+    @ColumnName("ID")
     private Long id;
-    @ColumnName
+    @ColumnName("NAME")
     private String name;
-    @ColumnName
+    @ColumnName("PRICE")
     private Double price;
-    @ColumnName
+    @ColumnName("DESCRIPTION")
     private String description;
-    @ColumnName
+    @ColumnName("FK_CATEGORIES")
     private Category category;
 
     public Product() {

@@ -8,17 +8,17 @@ import java.util.Set;
 
 @TableName("USERS")
 public class User {
-    @ColumnName
+    @ColumnName("ID")
     private Long id;
-    @ColumnName
+    @ColumnName("EMAIL")
     private String email;
-    @ColumnName
+    @ColumnName("PASSWORD")
     private String password;
-    @ColumnName
+    @ColumnName("FIRST_NAME")
     private String firstName;
-    @ColumnName
+    @ColumnName("LAST_NAME")
     private String lastName;
-    @ColumnName
+    @ColumnName("TOKEN")
     private String token;
     private Set<Role> roles = new HashSet<>();
 
