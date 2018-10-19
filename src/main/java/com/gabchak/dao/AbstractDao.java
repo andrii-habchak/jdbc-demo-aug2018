@@ -1,5 +1,6 @@
 package com.gabchak.dao;
 
+import com.gabchak.Factory;
 import com.gabchak.model.QueryBuilder;
 
 import java.sql.*;
@@ -9,7 +10,7 @@ import java.util.List;
 public abstract class AbstractDao<T, ID> implements GenericDao<T, ID> {
 
     private final Connection connection;
-    private QueryBuilder queryBuilder = new QueryBuilder();
+    private QueryBuilder queryBuilder = Factory.getQueryBuilder();
 
     protected AbstractDao(Connection connection) {
         this.connection = connection;
