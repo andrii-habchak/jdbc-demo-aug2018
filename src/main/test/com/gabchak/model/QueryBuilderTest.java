@@ -36,7 +36,7 @@ public class QueryBuilderTest {
 
     @org.junit.Test
     public void categoryGetInsertQuery() {
-        String expected = "INSERT INTO CATEGORIES (NAME)" +
+        String expected = "INSERT INTO CATEGORIES (CATEGORY_NAME)" +
                 " VALUES (?) WHERE ID = ?;";
         String actually = queryBuilder.getInsertQuery(Category.class);
         assertEquals(expected, actually);
