@@ -81,7 +81,11 @@ public class UserDaoImpl extends AbstractDao<User, Long> implements UserDao {
     @Override
     protected PreparedStatement prepareStatementForUpdate(PreparedStatement preparedStatement, User user) {
         try {
-            prepareStatementForInsert(preparedStatement, user);
+            preparedStatement.setString(1, user.getEmail());
+            preparedStatement.setString(2, user.getPassword());
+            preparedStatement.setString(3, user.getFirstName());
+            preparedStatement.setString(4, user.getLastName());
+            preparedStatement.setString(5, user.getToken());
             preparedStatement.setLong(6, user.getId());
         } catch (SQLException e) {
             e.printStackTrace();
