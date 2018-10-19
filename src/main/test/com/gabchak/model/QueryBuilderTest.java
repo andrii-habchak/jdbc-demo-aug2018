@@ -13,6 +13,7 @@ public class QueryBuilderTest {
         queryBuilder = new QueryBuilder();
     }
 
+    //Category----------
     @org.junit.Test
     public void categoryGetSelectByIdQuery() {
         String expected = "SELECT * FROM CATEGORIES WHERE ID = ?;";
@@ -49,6 +50,7 @@ public class QueryBuilderTest {
         assertEquals(expected, actually);
     }
 
+    //Product-----------
     @org.junit.Test
     public void productGetSelectByIdQuery() {
         String expected = "SELECT * FROM PRODUCTS WHERE ID = ?;";
@@ -82,6 +84,43 @@ public class QueryBuilderTest {
     public void productGetSelectAllQuery() {
         String expected = "SELECT * FROM PRODUCTS";
         String actually = queryBuilder.getSelectAllQuery(Product.class);
+        assertEquals(expected, actually);
+    }
+
+    //User-----------------------------
+    @org.junit.Test
+    public void userGetSelectByIdQuery() {
+        String expected = "SELECT * FROM USERS WHERE ID = ?;";
+        String actually = queryBuilder.getSelectByIdQuery(User.class);
+        assertEquals(expected, actually);
+    }
+
+    @org.junit.Test
+    public void userGetDeleteByIdQuery() {
+        String expected = "DELETE USERS WHERE ID = ?;";
+        String actually = queryBuilder.getDeleteByIdQuery(User.class);
+        assertEquals(expected, actually);
+    }
+
+    @org.junit.Test
+    public void userGetUpdateQuery() {
+        String expected = "UPDATE USERS SET EMAIL = ?, PASSWORD = ?, FIRST_NAME = ?, LAST_NAME = ?, TOKEN = ? WHERE ID = ?;";
+        String actually = queryBuilder.getUpdateQuery(User.class);
+        assertEquals(expected, actually);
+    }
+
+    @org.junit.Test
+    public void userGetInsertQuery() {
+        String expected = "INSERT INTO USERS (EMAIL, PASSWORD, FIRST_NAME, LAST_NAME, TOKEN)" +
+                " VALUES (?, ?, ?, ?, ?) WHERE ID = ?;";
+        String actually = queryBuilder.getInsertQuery(User.class);
+        assertEquals(expected, actually);
+    }
+
+    @org.junit.Test
+    public void userGetSelectAllQuery() {
+        String expected = "SELECT * FROM USERS";
+        String actually = queryBuilder.getSelectAllQuery(User.class);
         assertEquals(expected, actually);
     }
 
