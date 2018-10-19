@@ -76,6 +76,7 @@ public class ProductDaoImpl extends AbstractDao<Product, Long> implements Produc
             preparedStatement.setString(1, product.getName());
             preparedStatement.setDouble(2, product.getPrice());
             preparedStatement.setString(3, product.getDescription());
+            preparedStatement.setLong(4, product.getCategory().getId());
         } catch (SQLException e) {
             e.printStackTrace();
         }
