@@ -1,5 +1,6 @@
 package com.gabchak.dao;
 
+import com.gabchak.model.Category;
 import com.gabchak.model.Product;
 
 import java.sql.*;
@@ -16,13 +17,14 @@ public class ProductDaoImpl implements ProductDao {
 
     public void save(Product product) {
 
-        String query = "INSERT INTO PRODUCTS (NAME, PRICE, DESCRIPTION) VALUES (?, ?, ?);";
+        String query = "INSERT INTO PRODUCTS (NAME, PRICE, DESCRIPTION, FK_CATEGORIES) VALUES (?, ?, ?, ?);";
         PreparedStatement statement;
         try {
             statement = connection.prepareStatement(query);
             statement.setString(1, product.getName());
             statement.setDouble(2, product.getPrice());
             statement.setString(3, product.getDescription());
+            statement.setLong(4, product.getCategory().getId());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -69,7 +71,8 @@ public class ProductDaoImpl implements ProductDao {
     }
 
     public List<Product> findAll() {
-        String query = "SELECT ID, NAME, PRICE, DESCRIPTION FROM PRODUCTS";
+        String query = "SELECT P.ID, P.NAME, P.PRICE, P.DESCRIPTION, C.CATEGORY_NAME FROM PRODUCTS P " +
+                "JOIN CATEGORIES C ON P.FK_CATEGORIES = C.ID";
         List<Product> result = new ArrayList<>();
         Statement statement;
         ResultSet resultSet;
@@ -78,12 +81,25 @@ public class ProductDaoImpl implements ProductDao {
             statement = connection.createStatement();
             resultSet = statement.executeQuery(query);
             while (resultSet.next()){
-                result.add(getProductFromResultSet(resultSet));
+                result.add(getProductWithCategoryFromResultSet(resultSet));
             }
         }catch (SQLException e){
             e.printStackTrace();
         }
         return result;
+    }
+
+    private Product getProductWithCategoryFromResultSet(ResultSet resultSet) throws SQLException {
+        Product product = new Product(
+                resultSet.getLong(1),
+                resultSet.getString(2),
+                resultSet.getDouble(3),
+                resultSet.getString(4));
+
+        Category category = new Category();
+        category.setName(resultSet.getString(5));
+        product.setCategory(category);
+        return product;
     }
 
     private Product getProductFromResultSet (ResultSet resultSet) throws SQLException{

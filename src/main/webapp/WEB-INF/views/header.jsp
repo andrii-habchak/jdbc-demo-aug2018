@@ -21,6 +21,21 @@
             crossorigin="anonymous"></script>
 
     <style>
+        html,
+        body {
+            height: 100%;
+        }
+
+        body {
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-align: center;
+            align-items: center;
+            padding-top: 40px;
+            padding-bottom: 40px;
+            background-color: #f5f5f5;
+        }
+
         .form-signin {
             width: 100%;
             max-width: 330px;
@@ -51,53 +66,6 @@
             border-top-right-radius: 0;
         }
 
-        html {
-            font-size: 14px;
-        }
-        @media (min-width: 768px) {
-            html {
-                font-size: 16px;
-            }
-        }
-
-        .masthead {
-            margin-bottom: 2rem;
-        }
-
-        .masthead-brand {
-            margin-bottom: 0;
-        }
-
-        .nav-masthead .nav-link {
-            padding: .25rem 0;
-            font-weight: 700;
-            color: rgba(255, 255, 255, .5);
-            background-color: transparent;
-            border-bottom: .25rem solid transparent;
-        }
-
-        .nav-masthead .nav-link:hover,
-        .nav-masthead .nav-link:focus {
-            border-bottom-color: rgba(255, 255, 255, .25);
-        }
-
-        .nav-masthead .nav-link + .nav-link {
-            margin-left: 1rem;
-        }
-
-        .nav-masthead .active {
-            color: #fff;
-            border-bottom-color: #fff;
-        }
-
-        @media (min-width: 48em) {
-            .masthead-brand {
-                float: left;
-            }
-            .nav-masthead {
-                float: right;
-            }
-        }
     </style>
 
 </head>
@@ -117,7 +85,7 @@
                 <a class="nav-link" href="${pageContext.request.contextPath}/servlet/categories">Categories</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link disabled" href="${pageContext.request.contextPath}/servlet/adminPage">Admin Page</a>
+                <a class="nav-link disabled" href="${pageContext.request.contextPath}/servlet/admin">Admin Page</a>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>

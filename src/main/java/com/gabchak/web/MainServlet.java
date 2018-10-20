@@ -2,6 +2,7 @@ package com.gabchak.web;
 
 import com.gabchak.Factory;
 import com.gabchak.controller.Controller;
+import com.gabchak.controller.admin.AddProductController;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -11,8 +12,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.gabchak.Factory.getAllCategoriesController;
-import static com.gabchak.Factory.getPageNotFoundController;
+import static com.gabchak.Factory.*;
 
 public class MainServlet extends HttpServlet {
 
@@ -27,7 +27,11 @@ public class MainServlet extends HttpServlet {
         controllerMap.put(Request.of("GET", "/servlet/home"), r -> ViewModel.of("home"));
         controllerMap.put(Request.of("GET", "/servlet/admin"), r -> ViewModel.of("adminPage"));
         controllerMap.put(Request.of("GET", "/servlet/admin/content"), r -> ViewModel.of("content"));
-        controllerMap.put(Request.of("GET", "/servlet/admin/categories"), getAllCategoriesController());
+        controllerMap.put(Request.of("GET", "/servlet/admin/categories"), getAllCategoriesAdminController("manageCategories"));
+        controllerMap.put(Request.of("GET", "/servlet/admin/products"), getAllProductsAdminController());
+        controllerMap.put(Request.of("GET", "/servlet/admin/add-product"), r -> ViewModel.of("addProduct"));
+        controllerMap.put(Request.of("GET", "/servlet/admin/add-product"), getAllCategoriesAdminController("addProduct"));
+        controllerMap.put(Request.of("POST", "/servlet/admin/add-product"), getAddProductController());
         controllerMap.put(Request.of("POST", "/servlet/login"), Factory.getLoginPageController());
         controllerMap.put(Request.of("GET", "/servlet/product"), Factory.getProductByIdController());
         controllerMap.put(Request.of("GET", "/servlet/logout"), Factory.getLogoutController());

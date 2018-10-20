@@ -12,14 +12,17 @@ public class GetAllCategoriesAdminController implements Controller{
 
     private final CategoryDao categoryDao;
 
-    public GetAllCategoriesAdminController(CategoryDao categoryDao) {
+    private final String VIEW_NAME;
+
+    public GetAllCategoriesAdminController(CategoryDao categoryDao, String VIEW_NAME) {
         this.categoryDao = categoryDao;
+        this.VIEW_NAME = VIEW_NAME;
     }
 
     @Override
     public ViewModel process(Request request) {
         List<Category> categories = categoryDao.findAll();
-        ViewModel vm = ViewModel.of("manageCategories");
+        ViewModel vm = ViewModel.of(VIEW_NAME);
         vm.addAttribute("categories", categories);
         return vm;
     }

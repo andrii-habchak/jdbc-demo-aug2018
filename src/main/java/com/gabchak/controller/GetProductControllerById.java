@@ -8,9 +8,9 @@ import com.gabchak.web.ViewModel;
 
 public class GetProductControllerById implements Controller {
 
-    private final ProductDaoImpl productDao;
+    private final ProductDao productDao;
 
-    public GetProductControllerById(ProductDaoImpl productDao) {
+    public GetProductControllerById(ProductDao productDao) {
         this.productDao = productDao;
     }
 

@@ -1,8 +1,12 @@
 package com.gabchak;
 
 import com.gabchak.controller.*;
+import com.gabchak.controller.admin.AddProductController;
 import com.gabchak.controller.admin.GetAllCategoriesAdminController;
+import com.gabchak.controller.admin.GetAllProductsAdminController;
 import com.gabchak.dao.*;
+import com.gabchak.service.ProductService;
+import com.gabchak.service.ProductServiceImpl;
 import com.gabchak.service.UserService;
 import com.gabchak.service.UserServiceImpl;
 
@@ -69,7 +73,7 @@ public class Factory {
         return new GetProductControllerById(getProductDao());
     }
 
-    private static ProductDaoImpl getProductDao() {
+    private static ProductDao getProductDao() {
         return new ProductDaoImpl(connection);
     }
 
@@ -77,7 +81,19 @@ public class Factory {
         return new LogoutController();
     }
 
-    public static Controller getAllCategoriesAdminController() {
-        return new GetAllCategoriesAdminController(getCategoryDaoImpl(getConnection()));
+    public static Controller getAllCategoriesAdminController(String viewName) {
+        return new GetAllCategoriesAdminController(getCategoryDaoImpl(getConnection()), viewName);
+    }
+
+    public static ProductService getProductService() {
+        return new ProductServiceImpl(getProductDao());
+    }
+
+    public static Controller getAllProductsAdminController() {
+        return new GetAllProductsAdminController(getProductService());
+    }
+
+    public static Controller getAddProductController() {
+        return new AddProductController(getProductService());
     }
 }
