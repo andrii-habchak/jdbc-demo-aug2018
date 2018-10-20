@@ -46,6 +46,10 @@ public class UserFilter implements Filter {
             return;
         }
 
+        if (cookies == null) {
+            processUnauthenticated(servletRequest, servletResponse);
+        }
+
         for (Cookie cookie : cookies) {
             if (cookie.getName().equals(COOKIE_NAME)) {
                 token = cookie.getValue();

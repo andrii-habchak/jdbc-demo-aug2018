@@ -32,6 +32,11 @@ public class LoginRegisterFilter implements Filter {
         String token = null;
         User user = null;
 
+        if (cookies == null) {
+            filterChain.doFilter(servletRequest, servletResponse);
+            return;
+        }
+
         for (Cookie cookie : cookies) {
             if (cookie.getName().equals(getCookieName())) {
                 token = cookie.getValue();
