@@ -38,7 +38,7 @@ public class QueryBuilderTest {
     @org.junit.Test
     public void categoryGetInsertQuery() {
         String expected = "INSERT INTO CATEGORIES (CATEGORY_NAME)" +
-                " VALUES (?) WHERE ID = ?;";
+                " VALUES (?);";
         String actually = queryBuilder.getInsertQuery(Category.class);
         assertEquals(expected, actually);
     }
@@ -75,7 +75,7 @@ public class QueryBuilderTest {
     @org.junit.Test
     public void productGetInsertQuery() {
         String expected = "INSERT INTO PRODUCTS (NAME, PRICE, DESCRIPTION, FK_CATEGORIES)" +
-                " VALUES (?, ?, ?, ?) WHERE ID = ?;";
+                " VALUES (?, ?, ?, ?);";
         String actually = queryBuilder.getInsertQuery(Product.class);
         assertEquals(expected, actually);
     }
@@ -112,7 +112,7 @@ public class QueryBuilderTest {
     @org.junit.Test
     public void userGetInsertQuery() {
         String expected = "INSERT INTO USERS (EMAIL, PASSWORD, FIRST_NAME, LAST_NAME, TOKEN)" +
-                " VALUES (?, ?, ?, ?, ?) WHERE ID = ?;";
+                " VALUES (?, ?, ?, ?, ?);";
         String actually = queryBuilder.getInsertQuery(User.class);
         assertEquals(expected, actually);
     }

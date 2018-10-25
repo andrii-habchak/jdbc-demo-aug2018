@@ -23,7 +23,7 @@ public class QueryBuilder {
 
     public String getInsertQuery(Class<?> inputClass) {
         return "INSERT INTO " + getTableName(inputClass) + " (" + getColumnsNameForInsert(inputClass) + ")" +
-                " VALUES " + "(" + getQuestionMarks() + ")" + " WHERE " + getIdFieldName(inputClass) + " = ?;";
+                " VALUES " + "(" + getQuestionMarks() + ");";
     }
 
     public String getSelectAllQuery(Class<?> inputClass) {
