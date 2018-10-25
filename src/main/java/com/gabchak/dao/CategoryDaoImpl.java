@@ -45,6 +45,17 @@ public class CategoryDaoImpl extends AbstractDao<Category, Long> implements Cate
     }
 
     @Override
+    public Category findByIdWithProductsList(Long id) {
+        String query = "SELECT C.ID, C.CATEGORY_NAME, P.ID, P.NAME, P.PRICE, P.DESCRIPTION " +
+                "FROM CATEGORIES C JOIN PRODUCTS P " +
+                "ON C.ID = P.FK_CATEGORIES " +
+                "WHERE C.ID = ?";
+
+        return getObjectByParam(query, id);
+    }
+
+
+    @Override
     protected Category getObjectFromResultSet(ResultSet resultSet) {
         List<Product> products = new ArrayList<>();
         Category result = null;
@@ -53,7 +64,7 @@ public class CategoryDaoImpl extends AbstractDao<Category, Long> implements Cate
                     resultSet.getLong(1),
                     resultSet.getString(2),
                     products);
-            while (!resultSet.isAfterLast()){
+            while (!resultSet.isAfterLast()) {
                 Product product = new Product(
                         resultSet.getLong(3),
                         resultSet.getString(4),

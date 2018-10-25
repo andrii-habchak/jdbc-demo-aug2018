@@ -8,4 +8,6 @@ public interface CategoryDao extends GenericDao<Category, Long> {
 
     Category findByName(String name);
 
+    Category findByIdWithProductsList(Long id);
+
 }
