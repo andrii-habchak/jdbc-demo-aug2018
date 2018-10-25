@@ -42,4 +42,9 @@ public class CategoryServiceImpl extends AbstractService<Category, Long> impleme
     public List<Category> findAll() {
         return super.findAll();
     }
+
+    @Override
+    public Category findByIdWithProductsList(Long id) {
+        return categoryDao.findByIdWithProductsList(id);
+    }
 }
