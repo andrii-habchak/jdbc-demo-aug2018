@@ -1,5 +1,9 @@
 <%@include file="header.jsp" %>
 
-    <h1>Admin Page</h1>
+<div class="container">
+
+    <h1 class="display-4">Admin page</h1>
+
+</div>
 </body>
 </html>
