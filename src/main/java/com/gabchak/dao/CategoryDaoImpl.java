@@ -40,7 +40,7 @@ public class CategoryDaoImpl extends AbstractDao<Category, Long> implements Cate
 
     @Override
     public Category findByName(String name) {
-        String query = "SELECT * FROM CATEGORIES WHERE NAME = ?";
+        String query = "SELECT * FROM CATEGORIES WHERE CATEGORY_NAME = ?";
         return super.getObjectByParam(query, name);
     }
 
