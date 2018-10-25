@@ -11,7 +11,7 @@ import java.sql.SQLException;
 
 public class Factory {
 
-    static Connection connection = null;
+    private static Connection connection = null;
 
     static {
         try {
@@ -22,12 +22,12 @@ public class Factory {
         }
     }
 
-    public static Connection getConnection() {
+    private static Connection getConnection() {
         return connection;
     }
 
     public static Controller getGetCategoryByIdController() {
-        return new GetCategoryByIdController(getCategoryService());
+        return new GetCategoryByIdWithProductsController(getCategoryService());
     }
 
     public static GetAllCategoriesController getAllCategoriesController() {

@@ -5,16 +5,16 @@ import com.gabchak.service.CategoryService;
 import com.gabchak.web.Request;
 import com.gabchak.web.ViewModel;
 
-public class GetCategoryByIdController implements Controller {
+public class GetCategoryByIdWithProductsController implements Controller {
     private final CategoryService categoryService;
 
-    public GetCategoryByIdController(CategoryService categoryService) {
+    public GetCategoryByIdWithProductsController(CategoryService categoryService) {
         this.categoryService = categoryService;
     }
 
     @Override
     public ViewModel process(Request request) {
-        Category category = categoryService.findById(getIdFromRequest(request));
+        Category category = categoryService.findByIdWithProductsList(getIdFromRequest(request));
         ViewModel vm = ViewModel.of("category");
         vm.addAttribute("category", category);
         return vm;
