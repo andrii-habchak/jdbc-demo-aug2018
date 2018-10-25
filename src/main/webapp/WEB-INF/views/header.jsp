@@ -42,9 +42,11 @@
             padding: 15px;
             margin: auto;
         }
+
         .form-signin .checkbox {
             font-weight: 400;
         }
+
         .form-signin .form-control {
             position: relative;
             box-sizing: border-box;
@@ -52,14 +54,17 @@
             padding: 10px;
             font-size: 16px;
         }
+
         .form-signin .form-control:focus {
             z-index: 2;
         }
+
         .form-signin input[type="email"] {
             margin-bottom: -1px;
             border-bottom-right-radius: 0;
             border-bottom-left-radius: 0;
         }
+
         .form-signin input[type="password"] {
             margin-bottom: 10px;
             border-top-left-radius: 0;
@@ -69,6 +74,7 @@
         html {
             font-size: 14px;
         }
+
         @media (min-width: 768px) {
             html {
                 font-size: 16px;
@@ -109,6 +115,7 @@
             .masthead-brand {
                 float: left;
             }
+
             .nav-masthead {
                 float: right;
             }
@@ -118,38 +125,31 @@
 </head>
 <body>
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-    <a class="navbar-brand" href="#">Navbar</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+    <a class="navbar-brand" href="${pageContext.request.contextPath}/servlet/home">Logo</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+            aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="${pageContext.request.contextPath}/servlet/home">Home <span class="sr-only">(current)</span></a>
-            </li>
             <li class="nav-item">
                 <a class="nav-link" href="${pageContext.request.contextPath}/servlet/categories">Categories</a>
             </li>
+
             <li class="nav-item">
-                <a class="nav-link disabled" href="${pageContext.request.contextPath}/servlet/adminPage">Admin Page</a>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-                <div class="dropdown-menu" aria-labelledby="dropdown01">
-                    <a class="dropdown-item" href="#">Action</a>
-                    <a class="dropdown-item" href="#">Another action</a>
-                    <a class="dropdown-item" href="#">Something else here</a>
-                </div>
+                <a class="nav-link" href="${pageContext.request.contextPath}/servlet/adminPage">Admin Page</a>
             </li>
         </ul>
         <c:choose>
             <c:when test="${user != null}">
                 <div style="color:white" class="mr-3">Hello ${user.firstName}</div>
-                <a class="form-inline my-2 my-lg-0 btn btn-outline-primary mr-3" href="<c:url value="/servlet/logout"/>">Logout</a>
+                <a class="form-inline my-2 my-lg-0 btn btn-outline-primary mr-3"
+                   href="<c:url value="/servlet/logout"/>">Logout</a>
             </c:when>
             <c:otherwise>
-                <a class="form-inline my-2 my-lg-0 btn btn-outline-primary mr-3" href="<c:url value="/servlet/register"/>">Sign up</a>
+                <a class="form-inline my-2 my-lg-0 btn btn-outline-primary mr-3"
+                   href="<c:url value="/servlet/register"/>">Sign up</a>
             </c:otherwise>
         </c:choose>
         <form class="form-inline my-2 my-lg-0">
