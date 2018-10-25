@@ -150,6 +150,8 @@
             <c:otherwise>
                 <a class="form-inline my-2 my-lg-0 btn btn-outline-primary mr-3"
                    href="<c:url value="/servlet/register"/>">Sign up</a>
+                <a class="form-inline my-2 my-lg-0 btn btn-outline-primary mr-3"
+                   href="<c:url value="/servlet/login"/>">Login</a>
             </c:otherwise>
         </c:choose>
     </div>
