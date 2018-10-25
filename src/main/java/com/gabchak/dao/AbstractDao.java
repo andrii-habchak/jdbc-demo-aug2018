@@ -3,6 +3,7 @@ package com.gabchak.dao;
 import com.gabchak.Factory;
 import com.gabchak.model.QueryBuilder;
 
+import java.lang.reflect.ParameterizedType;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,14 +12,21 @@ public abstract class AbstractDao<T, ID> implements GenericDao<T, ID> {
 
     private final Connection connection;
     private QueryBuilder queryBuilder = Factory.getQueryBuilder();
+    private Class<?> genericParameterClass;
 
     protected AbstractDao(Connection connection) {
         this.connection = connection;
+        genericParameterClass = getGenericParameterClass();
+    }
+
+    private Class<?> getGenericParameterClass() {
+        ParameterizedType genericSuperclass = (ParameterizedType) this.getClass().getGenericSuperclass();
+        return (Class<?>) genericSuperclass.getActualTypeArguments()[0];
     }
 
     @Override
     public T findById(ID id) {
-        String query = queryBuilder.getSelectByIdQuery(connection.getClass());
+        String query = queryBuilder.getSelectByIdQuery(genericParameterClass);
         PreparedStatement preparedStatement;
         T result = null;
         try {
@@ -33,7 +41,7 @@ public abstract class AbstractDao<T, ID> implements GenericDao<T, ID> {
     }
     @Override
     public void update(T t) {
-        String query = queryBuilder.getUpdateQuery(connection.getClass());
+        String query = queryBuilder.getUpdateQuery(genericParameterClass);
         PreparedStatement preparedStatement;
 
         try {
@@ -48,7 +56,7 @@ public abstract class AbstractDao<T, ID> implements GenericDao<T, ID> {
 
     @Override
     public void deleteById(ID id) {
-        String query = queryBuilder.getDeleteByIdQuery(connection.getClass());
+        String query = queryBuilder.getDeleteByIdQuery(genericParameterClass);
         PreparedStatement preparedStatement;
 
         try {
@@ -95,7 +103,7 @@ public abstract class AbstractDao<T, ID> implements GenericDao<T, ID> {
 
     @Override
     public List<T> findAll() {
-        String query = queryBuilder.getSelectAllQuery(connection.getClass());
+        String query = queryBuilder.getSelectAllQuery(genericParameterClass);
         Statement statement;
         ResultSet resultSet;
         List<T> resultList = new ArrayList<>();
