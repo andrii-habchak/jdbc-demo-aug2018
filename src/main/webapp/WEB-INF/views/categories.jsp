@@ -1,11 +1,17 @@
 <%@include file="header.jsp" %>
 
-    <h1>Categories</h1>
-    <c:forEach var= "c" items="${categories}">
-        <h3>Category name: <a href= "<c:url value = "/servlet/category?c_id=${c.id}"/>"><c:out value="${c.name}"/></a>></h3>
-    </c:forEach>
-    
-
+<div class="container">
+    <h1 class="display-4">Categories</h1>
+    <div>
+        <ul>
+            <c:forEach var="c" items="${categories}">
+                <li><a href="<c:url value = "/servlet/category?c_id=${c.id}"/>"><c:out
+                        value="${c.name}"/></a>
+                </li>
+            </c:forEach>
+        </ul>
+    </div>
+</div>
 
 </body>
 </html>
