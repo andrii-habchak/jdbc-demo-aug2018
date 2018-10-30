@@ -60,15 +60,14 @@ public class UserFilter implements Filter {
             processUnauthenticated(servletRequest, servletResponse);
         } else {
             user = userService.findByToken(token);
-            setUser(request, user);
             if (user == null) {
                 processUnauthenticated(servletRequest, servletResponse);
             } else {
+                setUser(request, user);
                 if (verifyRole(user, roleName)) {
-                    setUser(request, user);
                     processAuthenticated(servletRequest, servletResponse, filterChain);
                 } else {
-                    processAccessDenied(servletRequest, servletResponse, filterChain);
+                    processAccessDenied(servletRequest, servletResponse);
                 }
             }
         }
@@ -79,7 +78,7 @@ public class UserFilter implements Filter {
         request.setAttribute("user", user);
     }
 
-    private void processAccessDenied(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws ServletException, IOException {
+    private void processAccessDenied(ServletRequest servletRequest, ServletResponse servletResponse) throws ServletException, IOException {
         servletRequest.getRequestDispatcher("/WEB-INF/views/accessDenied.jsp").forward(servletRequest, servletResponse);
     }
 
