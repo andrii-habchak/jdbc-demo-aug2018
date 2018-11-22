@@ -1,4 +1,4 @@
-First step to writing simple of e-commerce.
+## First step to writing simple of e-commerce.
 
 Using:
 - JDBC
